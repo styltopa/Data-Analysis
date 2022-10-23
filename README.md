@@ -1,2 +1,2 @@
 # Data-Analysis
-The exercises committed on the course of Data Analysis in academic year 2022-2023 
+The exercises committed on the course of Data Analysis in the academic year 2022-2023 
