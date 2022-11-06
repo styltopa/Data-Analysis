@@ -1,5 +1,6 @@
 % Stelios Topalidis
 % AEM: 9613
+% Exercise 3.3
 
 clc;
 % The percentage acceptance of the null hypothesis that the mean mu 
