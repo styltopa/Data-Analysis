@@ -1,5 +1,6 @@
 % Stelios Topalidis
 % AEM: 9613
+% Exercise 3.2
 
 clc;
 %% (a) Proof that the maximum likelihood estimator of lamda of the 
