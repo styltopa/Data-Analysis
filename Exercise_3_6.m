@@ -10,11 +10,11 @@ n = 10;
 x = randn(n, 1);
 
 B = 1000;
-% bootMeanX: vector with the means of each bootstrap sample
+% bootMeansX: vector with the means of each bootstrap sample
 % bootSamplesIndicesX: the indices of the values of the initial sample from 
 % which the bootstrap samples were drawn.
 [bootMeansX, bootSamplesIndicesX] =  bootstrp(B, @mean, x);
-% the actual bootstrap samples of initial sample x
+% the actual bootstrap samples of the initial sample x
 bootSamplesX = x(bootSamplesIndicesX);
 
 clf;
@@ -37,8 +37,9 @@ fprintf(['Bootstrap estimation of standard error (standard ', ...
     'deviation)\nof the sample mean of x: %.3f\n\n'], std(bootMeansX));
 % Note: The means of the bootstrap samples are (more or 
 % less) similar to one another since the samples are close to the initial 
-% one due to same probability resampling . Therefore, it is expected that 
-% their std will be smaller than the one of the initial sample
+% one due to the same probability of the initial elements to be resampled.
+% Therefore, it is expected that 
+% their std will be smaller than the one in the initial sample
  fprintf('RatioX: %.3f\n\n', std(x)/std(bootMeansX));
 
 %% (c) % steps (a) and (b) for y = e^x
