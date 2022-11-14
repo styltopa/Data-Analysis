@@ -29,8 +29,8 @@ end
 rejectPercent = rejectCount/M*100;
 
 fprintf('(a)\n(a.i) Parametric:\n');
-fprintf(['Number of rejections of the hypothesis that\n',...
-    'E[x] = %.2f: %.2f%% of the times.\n'], mu, rejectPercent);
+fprintf(['The hypothesis that E[x] = %.2f \nwas rejected ',...
+    '%.2f%% of the times.\n'], mu, rejectPercent);
 
 figure(1);
 nbins  = M/10;
@@ -55,8 +55,8 @@ end
 
 rejectPercent = rejectCount/M*100;
 
-fprintf(['Number of rejections of the hypothesis that\n',...
-    'E[x] = %.2f: %.2f%% of the times.\n\n'], mu, rejectPercent);
+fprintf(['The hypothesis that E[x] = %.2f \nwas rejected ',...
+    '%.2f%% of the times.\n\n'], mu, rejectPercent);
 
 
 figure(2);
@@ -81,9 +81,10 @@ rejectCount = 0;
 
 % get the p-value for each of the M samples using bootstrap
 for i = 1:M
+    initialSamCol = X(:, i);
     % get the bootstrap sample for each of the M initial samples
-    [~, bootSamIndices] = bootstrp(B, [], X(:, i));
-    bootSam = X(bootSamIndices);
+    [~, bootSamIndices] = bootstrp(B, [], initialSamCol);
+    bootSam = initialSamCol(bootSamIndices);
     % computing the means for all B bootstrap samples
     bootSamMean = mean(bootSam, 1);
     % testing if the zero value belongs to the bootstrap samples with 
@@ -98,8 +99,8 @@ end
 
 rejectPercent = rejectCount/M*100;
 fprintf('(a.ii) Bootstrap:\n');
-fprintf(['Number of rejections of the hypothesis that\n',...
-    'E[x] = %.2f: %.2f%% of the times.\n'], mu, rejectPercent);
+fprintf(['The hypothesis that E[x] = %.2f \nwas rejected ',...
+    '%.2f%% of the times.\n'], mu, rejectPercent);
 
 
 figure(3);
@@ -115,9 +116,10 @@ rejectCount = 0;
 
 % get the p-value for each of the M samples using bootstrap
 for i = 1:M
+    initialSamCol = X(:, i);
     % get the bootstrap sample for each of the M initial samples
-    [~, bootSamIndices] = bootstrp(B, [], X(:, i));
-    bootSam = X(bootSamIndices);
+    [~, bootSamIndices] = bootstrp(B, [], initialSamCol);
+    bootSam = initialSamCol(bootSamIndices);
     % computing the means for all B bootstrap samples
     bootSamMean = mean(bootSam, 1);
     % testing if the zero value belongs to the bootstrap samples with 
@@ -131,8 +133,8 @@ end
 
 
 rejectPercent = rejectCount/M*100;
-fprintf(['Number of rejections of the hypothesis that\n',...
-    'E[x] = %.2f: %.2f%% of the times.\n\n'], mu, rejectPercent);
+fprintf(['The hypothesis that E[x] = %.2f \nwas rejected ',...
+    '%.2f%% of the times.\n\n'], mu, rejectPercent);
 
 
 figure(4);
@@ -160,8 +162,8 @@ end
 rejectPercent = rejectCount/M*100;
 
 fprintf('(b.i) Parametric:\n');
-fprintf(['Number of rejections of the hypothesis that\n',...
-    'E[x^2] = %.2f: %.2f%% of the times.\n'], mu, rejectPercent);
+fprintf(['The hypothesis that E[x^2] = %.2f \nwas rejected ',...
+    '%.2f%% of the times.\n'], mu, rejectPercent);
 
 figure(5);
 nbins  = M/10;
@@ -186,8 +188,8 @@ end
 
 rejectPercent = rejectCount/M*100;
 
-fprintf(['Number of rejections of the hypothesis that\n',...
-    'E[x^2] = %.2f: %.2f%% of the times.\n\n'], mu, rejectPercent);
+fprintf(['The hypothesis that E[x^2] = %.2f \nwas rejected ',...
+    '%.2f%% of the times.\n\n'], mu, rejectPercent);
 
 
 figure(6);
@@ -211,9 +213,10 @@ rejectCount = 0;
 
 % get the p-value for each of the M samples using bootstrap
 for i = 1:M
+    initialSamCol = X2(:, i);
     % get the bootstrap sample for each of the M initial samples
-    [~, bootSamIndices] = bootstrp(B, [], X2(:, i));
-    bootSam = X2(bootSamIndices);
+    [~, bootSamIndices] = bootstrp(B, [], initialSamCol);
+    bootSam = initialSamCol(bootSamIndices);
     % computing the means for all B bootstrap samples
     bootSamMean = mean(bootSam, 1);
     % testing if the zero value belongs to the bootstrap samples with 
@@ -228,8 +231,8 @@ end
 
 rejectPercent = rejectCount/M*100;
 fprintf('(b.ii) Bootstrap:\n'); 
-fprintf(['Number of rejections of the hypothesis that\n',...
-    'E[x^2] = %.2f: %.2f%% of the times.\n'], mu, rejectPercent);
+fprintf(['The hypothesis that E[x^2] = %.2f \nwas rejected ',...
+    '%.2f%% of the times.\n'], mu, rejectPercent);
 
 
 figure(7);
@@ -245,9 +248,10 @@ rejectCount = 0;
 
 % get the p-value for each of the M samples using bootstrap
 for i = 1:M
+    initialSamCol = X2(:, i);
     % get the bootstrap sample for each of the M initial samples
-    [~, bootSamIndices] = bootstrp(B, [], X2(:, i));
-    bootSam = X(bootSamIndices);
+    [~, bootSamIndices] = bootstrp(B, [], initialSamCol );
+    bootSam = initialSamCol(bootSamIndices);
     % computing the means for all B bootstrap samples
     bootSamMean = mean(bootSam, 1);
     % testing if the zero value belongs to the bootstrap samples with 
@@ -261,8 +265,8 @@ end
 
 
 rejectPercent = rejectCount/M*100;
-fprintf(['Number of rejections of the hypothesis that\n',...
-    'E[x^2] = %.2f: %.2f%% of the times.\n'], mu, rejectPercent);
+fprintf(['The hypothesis that E[x^2] = %.2f \nwas rejected ',...
+    '%.2f%% of the times.\n'], mu, rejectPercent);
 
 
 figure(8);

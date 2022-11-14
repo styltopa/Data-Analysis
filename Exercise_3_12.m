@@ -2,9 +2,9 @@
 % AEM: 9613
 % Exercise 3.12
 
-clc;
-clear;
-close all;
+% clc;
+% clear;
+% close all;
 
 % number of samples
 M = 100;
@@ -17,37 +17,43 @@ alpha = 0.05;
 
 X = normrnd(muX, sigmaX, n, M);
 Y = normrnd(muY, sigmaY, m, M);
-pooledSam = [X; Y];
+% pooled sample
+pSam = [X; Y];
 rejectCount = 0;
 
 B = 1000;
 % for each of the M samples
 for i = 1:M
    % mean value of the initial pooled (x, y) sample
-   meanZ = mean(pooledSam(:, i), 1);
-   meanX = mean(X(:, i), 1);
-   meanY = mean(Y(:, i), 1);
+   mZ = mean(pSam(:, i), 1);
+   mX = mean(X(:, i), 1);
+   mY = mean(Y(:, i), 1);
    
-   pooledX = pooledSam(1:n, :);
-   pooledY = pooledSam(n+1:n+m, :);
+   % x and y derived from the separation of the pooled sample
+   pX = pSam(1:n, :);
+   pY = pSam(n+1:n+m, :);
    
-   centeredX = pooledX - meanX - meanZ;
-   centeredY = pooledY - meanY - meanZ;
+   % centered x and y 
+   cX = pX - mX - mZ;
+   cY = pY - mY - mZ;
    
-  
-   centeredPooledSample = [centeredX; centeredY];
-   [~, pooledSampleIndices] = bootstrp(B, [], centeredPooledSample(:,i));
-   pooledBootSam = centeredPooledSample(pooledSampleIndices);
+   % centered samples x and y into a pooled sample cpSam (centered pooled
+   % sample)
+   cpSam = [cX; cY];
+   cpCol = cpSam(:,i);
+   [~, pSamIndexes] = bootstrp(B, [], cpCol);
+   pBootSam = cpCol(pSamIndexes);
+ 
 
    % separation into bootstrap samples x and y
-   pooledX = pooledBootSam(1:n, :);
-   pooledY = pooledBootSam(n+1: n+m, :);
+   pX = pBootSam(1:n, :);
+   pY = pBootSam(n+1: n+m, :);
 
    % calculation of the mean for each bootstrap x, y sample 
    % and the diff of their means
-   meanX = mean(pooledX, 1);
-   meanY = mean(pooledY, 1);
-   diffOfMeans = meanX - meanY;
+   mX = mean(pX, 1);
+   mY = mean(pY, 1);
+   diffOfMeans = mX - mY;
    diffOfMeansSorted = sort(diffOfMeans);
 
    % constains the indexes for the low and high bounds of the ci 

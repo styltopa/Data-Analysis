@@ -31,29 +31,30 @@ for i = 1:M
 end
 
 rejectPercent = rejectCount/M*100;
-fprintf('Parametric test\n');
+fprintf('- Parametric test\n');
 fprintf(['The hypothesis that X and Y share the same mean \n',...
     'was rejected %.1f%% of the times.\n'], rejectPercent);
 
 %% Bootstrap
 B = 1000;
-% 
-initialPooledSample = [X; Y];
+% initial X and Y put into a pooled sample (pSam)
+pSam = [X; Y];
 rejectCount = 0;
 % for each pooled sample
 for i = 1:M
+    xCol = pSam(:,i);
     % calculation of the pooled bootstrap sample
-    [~, pooledSampleIndices] = bootstrp(B, [], initialPooledSample(:,i));
-    pooledBootSam = initialPooledSample(pooledSampleIndices);
+    [~, pSamIndexes] = bootstrp(B, [], xCol);
+    pBootSam = xCol(pSamIndexes);
     
     % separation into bootstrap samples x and y
-    pooledX = pooledBootSam(1:n, :);
-    pooledY = pooledBootSam(n+1: n+m, :);
+    pX = pBootSam(1:n, :);
+    pY = pBootSam(n+1: n+m, :);
 
     % calculation of the mean for each bootstrap x, y sample 
     % and the diff of their means
-    meanX = mean(pooledX, 1);
-    meanY = mean(pooledY, 1);
+    meanX = mean(pX, 1);
+    meanY = mean(pY, 1);
     diffOfMeans = meanX - meanY;
     diffOfMeansSorted = sort(diffOfMeans);
     
@@ -74,20 +75,25 @@ end
 % percentage where zero is inside the ci of the difference of the means
 rejectPercent = rejectCount/M*100;
 
-fprintf('Bootstrap test\n');
+fprintf('- Bootstrap test\n');
 fprintf(['The hypothesis that X and Y share the same mean\n',...
     'was rejected %.1f%% of the times\n'], rejectPercent);
 
 %% Random Permutation
-% the indices of the sample using random permutation
-pooledSam = [X; Y];
+% X and Y joined into a pooled sample (pSam)
+pSam = [X; Y];
 randPermSam = nan(n+m, B);
 rejectCount = 0;
 
 for i = 1:M
+    % each of the samples is a column (pSamCol) of the pooled sample (pSam)
+    pSamCol = pSam(:, i);
+    % for each sample derived from a random permutation
     for j = 1:B
-       permIndices = randperm(n+m);       
-       randPermSam(:, j) = pooledSam(permIndices); 
+       % finding the indices of one of the B samples using random 
+       % permutation
+       permIndices = randperm(n+m);
+       randPermSam(:, j) = pSamCol(permIndices);
     end
     % separation into random permuted samples x and y
     randPermX = randPermSam(1:n, :);
@@ -117,7 +123,7 @@ end
 
 rejectPercent = rejectCount/M*100;
 
-fprintf('Random permutation test\n');
+fprintf('- Random permutation test\n');
 fprintf(['The hypothesis that X and Y share the same mean\n',...
     'was rejected %.1f%% of the times\n\n'], rejectPercent);
 

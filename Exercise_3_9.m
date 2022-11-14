@@ -43,9 +43,10 @@ initialPooledSample = [X; Y];
 zeroInCiCounter = 0;
 % for each pooled sample
 for i = 1:M
+    initialSampleCol = initialPooledSample(:,i);
     % calculation of the pooled bootstrap sample
-    [~, pooledSampleIndices] = bootstrp(B, [], initialPooledSample(:,i));
-    pooledBootSam = initialPooledSample(pooledSampleIndices);
+    [~, pooledSampleIndices] = bootstrp(B, [], initialSampleCol );
+    pooledBootSam = initialSampleCol(pooledSampleIndices);
     
     % separation into bootstrap samples x and y
     pooledX = pooledBootSam(1:n, :);
@@ -105,9 +106,10 @@ initialPooledSample = [X2; Y2];
 zeroInCiCounter = 0;
 % for each pooled sample
 for i = 1:M
+    initialSampleCol = initialPooledSample(:,i);
     % calculation of the pooled bootstrap sample
-    [~, pooledSampleIndices] = bootstrp(B, [], initialPooledSample(:,i));
-    pooledBootSam = initialPooledSample(pooledSampleIndices);
+    [~, pooledSampleIndices] = bootstrp(B, [], initialSampleCol);
+    pooledBootSam = initialSampleCol(pooledSampleIndices);
     
     % separation into bootstrap samples x and y
     pooledX = pooledBootSam(1:n, :);
@@ -182,9 +184,10 @@ initialPooledSample = [X; Y];
 zeroInCiCounter = 0;
 % for each pooled sample
 for i = 1:M
+    initialSampleCol = initialPooledSample(:,i);
     % calculation of the pooled bootstrap sample
-    [~, pooledSampleIndices] = bootstrp(B, [], initialPooledSample(:,i));
-    pooledBootSam = initialPooledSample(pooledSampleIndices);
+    [~, pooledSampleIndices] = bootstrp(B, [], initialSampleCol);
+    pooledBootSam = initialSampleCol(pooledSampleIndices);
     
     % separation into bootstrap samples x and y
     pooledX = pooledBootSam(1:n, :);
@@ -244,9 +247,10 @@ initialPooledSample = [X2; Y2];
 zeroInCiCounter = 0;
 % for each pooled sample
 for i = 1:M
+    initialSampleCol = initialPooledSample(:,i);
     % calculation of the pooled bootstrap sample
-    [~, pooledSampleIndices] = bootstrp(B, [], initialPooledSample(:,i));
-    pooledBootSam = initialPooledSample(pooledSampleIndices);
+    [~, pooledSampleIndices] = bootstrp(B, [], initialSampleCol);
+    pooledBootSam = initialSampleCol(pooledSampleIndices);
     
     % separation into bootstrap samples x and y
     pooledX = pooledBootSam(1:n, :);
