@@ -3,6 +3,7 @@
 % Exercise 3.7
 
 clc;
+clear;
 close all;
 
 M = 100;
