@@ -38,19 +38,22 @@ fprintf(['(a)\nParametric: The means are equal (zero is inside the ci\n',...
 
 % (ii) Bootstrap sampling method
 B = 1000;
-% 
-initialPooledSample = [X; Y];
+% initial pooled sample (ipSam)
+ipSam = [X; Y];
 zeroInCiCounter = 0;
 % for each pooled sample
 for i = 1:M
-    initialSampleCol = initialPooledSample(:,i);
+    % column of the initial sample (iSamCol)
+    iSamCol= ipSam(:,i);
     % calculation of the pooled bootstrap sample
-    [~, pooledSampleIndices] = bootstrp(B, [], initialSampleCol );
-    pooledBootSam = initialSampleCol(pooledSampleIndices);
+    % pSamInd : pooled sample indices
+    % pbSam: pooled bootstrap sample
+    [~, pSamInd] = bootstrp(B, [], iSamCol);
+    pbSam = iSamCol(pSamInd);
     
     % separation into bootstrap samples x and y
-    pooledX = pooledBootSam(1:n, :);
-    pooledY = pooledBootSam(n+1: n+m, :);
+    pooledX = pbSam(1:n, :);
+    pooledY = pbSam(n+1: n+m, :);
 
     % calculation of the mean for each bootstrap x, y sample 
     % and the diff of their means
@@ -102,18 +105,18 @@ fprintf(['(b)\nParametric: The means are equal (zero is inside the ci\n',...
 % (ii) Bootstrap sampling method
 B = 1000;
 % 
-initialPooledSample = [X2; Y2];
+ipSam = [X2; Y2];
 zeroInCiCounter = 0;
 % for each pooled sample
 for i = 1:M
-    initialSampleCol = initialPooledSample(:,i);
+    iSamCol = ipSam(:,i);
     % calculation of the pooled bootstrap sample
-    [~, pooledSampleIndices] = bootstrp(B, [], initialSampleCol);
-    pooledBootSam = initialSampleCol(pooledSampleIndices);
+    [~, pSamInd] = bootstrp(B, [], iSamCol);
+    pbSam = iSamCol(pSamInd);
     
     % separation into bootstrap samples x and y
-    pooledX = pooledBootSam(1:n, :);
-    pooledY = pooledBootSam(n+1: n+m, :);
+    pooledX = pbSam(1:n, :);
+    pooledY = pbSam(n+1: n+m, :);
 
     % calculation of the mean for each bootstrap x, y sample 
     % and the diff of their means
@@ -179,19 +182,19 @@ fprintf(['(c.a)\nParametric: The means are equal (zero is inside the ci\n',...
 
 % (ii) Bootstrap sampling method
 B = 1000;
-% 
-initialPooledSample = [X; Y];
+% initial pooled sample 
+ipSam = [X; Y];
 zeroInCiCounter = 0;
 % for each pooled sample
 for i = 1:M
-    initialSampleCol = initialPooledSample(:,i);
+    iSamCol = ipSam(:,i);
     % calculation of the pooled bootstrap sample
-    [~, pooledSampleIndices] = bootstrp(B, [], initialSampleCol);
-    pooledBootSam = initialSampleCol(pooledSampleIndices);
+    [~, pSamInd] = bootstrp(B, [], iSamCol);
+    pbSam = iSamCol(pSamInd);
     
     % separation into bootstrap samples x and y
-    pooledX = pooledBootSam(1:n, :);
-    pooledY = pooledBootSam(n+1: n+m, :);
+    pooledX = pbSam(1:n, :);
+    pooledY = pbSam(n+1: n+m, :);
 
     % calculation of the mean for each bootstrap x, y sample 
     % and the diff of their means
@@ -243,18 +246,18 @@ fprintf(['(c.b)\nParametric: The means are equal (zero is inside the ci\n',...
 % (ii) Bootstrap sampling method
 B = 1000;
 % 
-initialPooledSample = [X2; Y2];
+ipSam = [X2; Y2];
 zeroInCiCounter = 0;
 % for each pooled sample
 for i = 1:M
-    initialSampleCol = initialPooledSample(:,i);
+    iSamCol = ipSam(:,i);
     % calculation of the pooled bootstrap sample
-    [~, pooledSampleIndices] = bootstrp(B, [], initialSampleCol);
-    pooledBootSam = initialSampleCol(pooledSampleIndices);
+    [~, pSamInd] = bootstrp(B, [], iSamCol);
+    pbSam = iSamCol(pSamInd);
     
     % separation into bootstrap samples x and y
-    pooledX = pooledBootSam(1:n, :);
-    pooledY = pooledBootSam(n+1: n+m, :);
+    pooledX = pbSam(1:n, :);
+    pooledY = pbSam(n+1: n+m, :);
 
     % calculation of the mean for each bootstrap x, y sample 
     % and the diff of their means
@@ -282,4 +285,14 @@ fprintf(['Bootstrap: The means are equal (zero is inside the ci \n',...
     'or diff of means = 0) %.1f%% of the times \n\n'],...
     zeroInCiPercentage);
 
+% Notes:
+% (a) For X,Y~N(0,1) the parametric and the bootstrap seem to be similar in 
+% (c.a) For X~N(0,1), Y~N(0.2,1) the bootstrap fails to identify the 
+% difference in the means, accepting the null hypothesis at a higher rate.
 
+% (b) On the case of the squared samples the parametric is more strict and
+% rejects the hypothesis for some of the samples whereas the bootstrap
+% seems to accept them all
+% (c.b) Same as (c.a), bootstrap is less accurate than the parametric one
+% even if the former supposes normal distribution(?) (expected the
+% opposite)

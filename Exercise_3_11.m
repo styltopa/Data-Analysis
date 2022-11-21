@@ -22,26 +22,29 @@ fprintf('For significance level a = %.3f:\n', alpha);
 %% Parametric
 % check the hypothesis of the variables sharing the same mean for 
 % each sample
-rejectCount = 0;
+% rCount: rejection counter
+rCount = 0;
 for i = 1:M
     [h, ~] = ttest2(X(:, i), Y(:, i), 'Alpha', alpha);
     if h == 1
-        rejectCount = rejectCount + 1;
+        rCount = rCount + 1;
     end
 end
 
-rejectPercent = rejectCount/M*100;
+% rPercent: rejection percentage
+rPercent = rCount/M*100;
 fprintf('- Parametric test\n');
 fprintf(['The hypothesis that X and Y share the same mean \n',...
-    'was rejected %.1f%% of the times.\n'], rejectPercent);
+    'was rejected %.1f%% of the times.\n'], rPercent);
 
 %% Bootstrap
 B = 1000;
 % initial X and Y put into a pooled sample (pSam)
 pSam = [X; Y];
-rejectCount = 0;
+rCount = 0;
 % for each pooled sample
 for i = 1:M
+    % xCol: the column of the initial sample
     xCol = pSam(:,i);
     % calculation of the pooled bootstrap sample
     [~, pSamIndexes] = bootstrp(B, [], xCol);
@@ -68,22 +71,22 @@ for i = 1:M
               diffOfMeansSorted(ciBootIndexes(2))];
     if mean(X(:,i)) - mean(Y(:,i))  < ciBoot(1) || ...
             mean(X(:,i)) - mean(Y(:,i)) > ciBoot(2) 
-        rejectCount = rejectCount + 1;
+        rCount = rCount + 1;
     end
 end
 
 % percentage where zero is inside the ci of the difference of the means
-rejectPercent = rejectCount/M*100;
+rPercent = rCount/M*100;
 
 fprintf('- Bootstrap test\n');
 fprintf(['The hypothesis that X and Y share the same mean\n',...
-    'was rejected %.1f%% of the times\n'], rejectPercent);
+    'was rejected %.1f%% of the times\n'], rPercent);
 
 %% Random Permutation
 % X and Y joined into a pooled sample (pSam)
 pSam = [X; Y];
 randPermSam = nan(n+m, B);
-rejectCount = 0;
+rCount = 0;
 
 for i = 1:M
     % each of the samples is a column (pSamCol) of the pooled sample (pSam)
@@ -117,14 +120,14 @@ for i = 1:M
               diffOfMeansSorted(ciBootIndexes(2))];
     if mean(X(:,i)) - mean(Y(:,i))  < ciBoot(1) || ...
             mean(X(:,i)) - mean(Y(:,i)) > ciBoot(2) 
-        rejectCount = rejectCount + 1;
+        rCount = rCount + 1;
     end
 end
 
-rejectPercent = rejectCount/M*100;
+rPercent = rCount/M*100;
 
 fprintf('- Random permutation test\n');
 fprintf(['The hypothesis that X and Y share the same mean\n',...
-    'was rejected %.1f%% of the times\n\n'], rejectPercent);
+    'was rejected %.1f%% of the times\n\n'], rPercent);
 
-% Notes: The three test seem to agree.
+% Notes: The three tests seem to agree.
