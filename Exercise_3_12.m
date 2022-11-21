@@ -2,9 +2,9 @@
 % AEM: 9613
 % Exercise 3.12
 
-% clc;
-% clear;
-% close all;
+clc;
+clear;
+close all;
 
 % number of samples
 M = 100;
@@ -19,7 +19,8 @@ X = normrnd(muX, sigmaX, n, M);
 Y = normrnd(muY, sigmaY, m, M);
 % pooled sample
 pSam = [X; Y];
-rejectCount = 0;
+% rCount: rejection counter
+rCount = 0;
 
 B = 1000;
 % for each of the M samples
@@ -66,15 +67,18 @@ for i = 1:M
               diffOfMeansSorted(ciBootIndexes(2))];
    if mean(X(:,i)) - mean(Y(:,i))  < ciBoot(1) || ...
             mean(X(:,i)) - mean(Y(:,i)) > ciBoot(2) 
-        rejectCount = rejectCount + 1;
+        rCount = rCount + 1;
    end
 end
 
 
-% percentage where zero is inside the ci of the difference of the means
-rejectPercentage = rejectCount/M*100;
+% rPercent: percentage where zero is inside the ci of the difference 
+% of the means
+rPercent = rCount/M*100;
 
-fprintf(['Bootstrap: The means of the centered samples are equal\n',...
+fprintf(['Bootstrap: The means of the centered samples are not equal\n',...
     '(zero is inside the ci of the percentiles) \n',...
     '%.1f%% of the times \n'],...
-    rejectPercentage);
+    rPercent);
+
+% Notes: the rejection percentage (~8%) is quite close to the alpha (5%)
