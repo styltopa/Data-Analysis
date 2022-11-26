@@ -1,6 +1,6 @@
 % Stelios Topalidis
 % AEM: 9613
-% Exercise 3.10
+% Exercise 4.1
 
 clc;
 clear;
