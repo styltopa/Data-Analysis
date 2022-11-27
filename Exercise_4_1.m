@@ -33,7 +33,7 @@ fprintf(['Repetition uncertainty (for each new observation) =',...
 % Notes: The std for each new observation is naturally greater than the one
 % for the mean (the expected mean of a new sample of observations).
 
-%% (b) 
+%% (b) Mean and standard devition for all M samples
 n = 5;
 M = 1000;
 % mean for h2 to draw the sample 
@@ -87,7 +87,8 @@ xline(expectedStdE, '-', 'expected std of e');
 % However the standard deviations of h2 and e are lopsided (they have
 % positive skewness / lopsided to the left).
 
-%% (c)
+%% (c) Check if the ball is well inflated (meaning e is constant for all 
+%% dropping heights h1 
 
 h1 =  [80 100 90 120 95];
 h2 = [48 60 50 75 56];
@@ -116,7 +117,7 @@ fprintf('Sample mean e: %.3f\n', mean(e));
 [h1Sorted, ind] = sort(h1);
 h2Sorted = sort(h2);
 figure(5);
-plot(h1Sorted, e(ind));
+plot(h1Sorted, e(ind), 'Linewidth', 2);
 xlabel('h1');
 ylabel('e');
 title('Restitution coefficient e as a function of the dropping height h1');
