@@ -18,21 +18,22 @@ close all;
 
 % Caclulation for (V, I, f) = the mean values (muV, muI, muf) from 
 % part b):
-% tMean: theoretic power mean 
+
+% tMean: theoretical power mean (not used)
 tPMean = muV*muI*cos(muf);
-% tStdP¨theoretic standard deviation of power 
+
+% tStdP¨theoretical standard deviation of power 
 % By the law of propagation of errors and given V, I, f 
 % and their uncertainties from (b) we compute
 tStdP = sqrt((muI*cos(muf)*stdV)^2 + (muV*cos(muf)*stdI)^2 + ...
     (muV*muI*(-sin(muf))*stdf)^2);
 
-fprintf(['(a)\nTheoretic power uncertainty: %.3f\n\n'], tStdP);
+fprintf('(a)\nTheoretical power uncertainty: %.3f\n\n', tStdP);
 
 
-%% (b) Check if the sample stdP is consistent with its theoretic value 
-%% (check if the sample and the theoretic accuracy are equal)
-% M samples of triad of (V, I, f), histogram of P, two xlines of +-stdP of
-% a one from the sample and the one from a
+%% (b) Check if the sample stdP is consistent with its theoretical value 
+%% (check if the sample and the theoretical accuracy are equal)
+% M samples of the triad (V, I, f)
 M = 1000;
 % vector of means
 muVector = [muV, muI, muf];
@@ -49,10 +50,10 @@ f = varsSamples(:, 3);
 
 P = V.*I.*cos(f);
 
-% sPMean: sample power mean. It converges to the theoretic mean for 
+% sPMean: sample power mean. It converges to the theoretical mean for 
 % large number of triads (V, I, f)
 % sStdP: sample power standard deviation. It also converges to the 
-% theoretic standard deviation large number of triads (V, I, f)
+% theoretical standard deviation large number of triads (V, I, f)
 sPMean = mean(P);
 % (standard deviation of the values of P \n',...
 %    'calculated from the triads (V, I, f))
@@ -60,19 +61,21 @@ sStdP = std(P);
 
 figure(1);
 histogram(P);
-title(['M = ', num2str(M),' samples of power given that V, I and f are ',...
+title(['(b): M = ', num2str(M),' samples of power given that V, I and f are ',...
     'uncorrelated']);
 
-% Note: the xlines are for the sample means and standard deviations
+% Note: the xlines are given by the sample means and standard deviations
 xline([sPMean - sStdP, sPMean + sStdP], '-', {'mu - sample std',...
      'mu + sample std'}, 'LineWidth', 2);
-xline([sPMean - tStdP, sPMean, sPMean + tStdP], '-', {'mu - theoretical std',...
-    'mu', 'mu + tStdP'}, 'LineWidth', 2, 'Color', 'r');
+xline([sPMean - tStdP, sPMean, sPMean + tStdP], '-', ...
+    {'mu - theoretical std', 'mu', 'mu + theoretical StdP'}, ...
+    'LineWidth', 2, 'Color', 'r',...
+    'LabelVerticalAlignment', 'bottom');
 
 
 fprintf(['(b)\n',...
     'Sample power uncertainty: %.3f\n\n'], sStdP); 
-% Note: the sample accuracy (sStdP) is close to the theoretic one (tStdP)
+% Note: the sample accuracy (sStdP) is close to the theoretical one (tStdP)
 
 %% (c) Same as (a, b) but this time V and f are correlated 
 %% (c.a) This time the law of propagation of errors considers the
@@ -85,7 +88,7 @@ rhoVf = 0.5;
 %     (V*I*(-sin(f)))^2) + ...
 %     (I*cos(f))*(V*I*(-sin(f)))*VfCorrCoeff * stdV * stdf;
 
-% tMean: theoretic power mean. The non zero covariance between 
+% tMean: theoretical power mean. The non zero covariance between 
 % V and f does not influence the calculation of the mean (remains the same
 % as before).
 tPMean = muV*muI*cos(muf);
@@ -93,13 +96,13 @@ tPMean = muV*muI*cos(muf);
 % covariance of V and f (rho12 = cov12/(sigma1*sigma2))
 covVf = rhoVf * stdV * stdf;
 
-% tStdP¨theoretic standard deviation of power. Here however, the law of
+% tStdP¨theoretical standard deviation of power. Here however, the law of
 % propagation of error now takes into account the non-zero covariance
 % of V and f.
 tStdP = sqrt((muI*cos(muf)*stdV)^2 + (muV*cos(muf)*stdI)^2 + ...
     (muV*muI*(-sin(muf))*stdf)^2 + ...
     (muI*cos(muf))*(muV*muI*(-sin(muf)))* covVf);
-fprintf(['(c.a)\nTheoretic power uncertainty (V, f are now ',...
+fprintf(['(c.a)\nTheoretical power uncertainty (V, f are now ',...
     'correlated): %.3f \n\n'], tStdP);
 
 % Note: the non zero covariance between V and I results in a smaller stdP
@@ -129,10 +132,10 @@ f = varsSamples(:, 3);
 P = V.*I.*cos(f);
 
 
-% sPMean: sample power mean. It converges to the theoretic mean for 
+% sPMean: sample power mean. It converges to the theoretical mean for 
 % large number of triads (V, I, f)
 % sStdP: sample power standard deviation. It also converges to the 
-% theoretic standard deviation large number of triads (V, I, f)
+% theoretical standard deviation large number of triads (V, I, f)
 sPMean = mean(P);
 % (standard deviation of the values of P \n',...
 %    'calculated from the triads (V, I, f))
@@ -140,7 +143,7 @@ sStdP = std(P);
 
 figure(2);
 histogram(P);
-title(['M = ', num2str(M),' samples of power given that V and f are ',...
+title(['(c.b): M = ', num2str(M),' samples of power given that V and f are ',...
     'correlated with $$\rho_{V, f}$$ =', num2str(rhoVf)], 'interpreter',...
     'latex');
 
@@ -149,7 +152,8 @@ xline([sPMean - sStdP, sPMean + sStdP], '-', {'mu - sample std',...
      'mu + sample std'}, 'LineWidth', 2);
 xline([sPMean - tStdP, sPMean, sPMean + tStdP], '-', ...
     {'mu - theoretical std',...
-     'mu', 'mu + theoretical std'}, 'LineWidth', 2, 'Color', 'r');
+     'mu', 'mu + theoretical std'}, 'LineWidth', 2, 'Color', 'r', ...
+     'LabelVerticalAlignment', 'bottom');
 
 
 fprintf(['(c.b)\n',...

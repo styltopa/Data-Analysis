@@ -17,11 +17,11 @@ eDesired = 0.76;
 eDiff = e - eDesired;
 % Accuracy: if e of the ball is close to eDesired (small systematic
 % error)
-% accuracy uncertainty
+% accuracy uncertainty (for the mean)
 numOfObservations = length(e);
 accUncer = std(eDiff)/sqrt(numOfObservations);
 
-% repetition uncertainty
+% repetition uncertainty (for each new observation)
 repetUncer = std(eDiff);
 
 fprintf('(a)\nAccuracy uncertainty (for the mean)= %.4f.\n',...
@@ -60,6 +60,10 @@ histogram(sampleStdH2);
 title(['Standard deviations of h2 for M = ', num2str(M), ' samples']);
 xline(expectedStdH2, '-', 'expected std of h2');
 
+% Note: while we know that the mean of data following the normal
+% distribution also follows the normal distribution, the standard deviation
+% follows some unknown distribution.
+
 %% e
 % h1 remains the same for all measurements.
 expectedMeanE = sqrt(expectedMeanH2/h1);
@@ -84,8 +88,10 @@ title(['Sample standard deviations of e for M = ', num2str(M), ' samples']);
 xline(expectedStdE, '-', 'expected std of e');
 
 % Notes: the means of both h2 and e seem to follow the normal distribution
+% (as expected for the means of samples following a normal distriution)
 % However the standard deviations of h2 and e are lopsided (they have
-% positive skewness / lopsided to the left).
+% positive skewness / lopsided to the left). Their not following the normal 
+% distribution was also expected.
 
 %% (c) Check if the ball is well inflated (meaning e is constant for all 
 %% dropping heights h1 

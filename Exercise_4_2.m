@@ -50,8 +50,10 @@ fprintf(['Example:\nFor stdA = sqrt(c) = %d, \n',...
 
 %% (b) 3D Plot the area of a rectangle as a function of length and width
 % Make sure the ranges of length and width are positive 
-rangeStep = 100;
-[lRange, wRange] = deal(10:rangeStep:1000, 10:rangeStep:1000);
+[startVal, rangeStep, stopVal] = deal(10, 100, 1000);
+
+[lRange, wRange] = deal(startVal:rangeStep:stopVal, startVal:rangeStep:...
+    stopVal);
 [l, w] = meshgrid(lRange, wRange);
 a = l.*w;
 figure(1);
