@@ -33,13 +33,87 @@ for monthKey = 1:numOfCols
 %     hold off
 end
 
+% Significance level for the tests
+alpha = 0.05;
+% Mapping numbers to months
+keySet = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]; 
+valueSet = {'January', 'February', 'March', 'April', 'May', 'June', ...
+    'July', 'August', 'September', 'October', 'November', 'December'};
+num2MonthMap = containers.Map(keySet,valueSet);
+
+
 %% Parametric test
 % Transformation of sample correlation coefficients (r) into statistic t
 % following the student distribution
+% the degrees of freedom of the studentised statistic is equal to 
+% the number of observations on which the correlation coefficient
+% is calculated.
+dof = numOfRows-2;
 
-% Notes: how is the parametric test performed when we only have one r for 
-% every month? We need many instances of the statistic r meaning more
-% samples.
+corrCoefPerMonthTransformed = ...
+    corrCoefPerMonthOriginal.*sqrt((numOfRows-2)./(1-corrCoefPerMonthOriginal.^2));
+% disp('corrCoefPerMonthTransformed:');
+% disp(corrCoefPerMonthTransformed);
+% disp('length(corrCoefPerMonthTransformed):')
+% disp(length(corrCoefPerMonthTransformed));
+
+tBoundOnXAxis = 5; 
+tStep = 0.1;
+    
+% for each month
+for monthKey = 1:length(corrCoefPerMonthTransformed)
+    % Console output for the parametric test per month
+    if monthKey == 1
+        fprintf('Parametric test\n')
+        fprintf(['Month\tParametric ci\tOriginal sample r\tHypothesis '...
+            'test\n'])
+    end
+%     if monthKey == 2
+%         error('Check if the first title is correct'); 
+%     end
+    % If the statistic is inside  the parametric ci, the paramertic 
+    % hypothesis test is rejected if the real value of the statistic lies
+    % outside
+    corrCoefLow = tinv(alpha/2, dof);
+    corrCoefHigh = tinv(1-alpha/2, dof);
+    if corrCoefPerMonthTransformed(monthKey) < corrCoefLow ...
+        || corrCoefPerMonthTransformed(monthKey) > corrCoefHigh
+        rejectionTestStr = 'rejected';
+    else
+        rejectionTestStr = 'not rejected';
+    end
+
+    fprintf('%s:\t[%.3f, %.3f]\t%.3f\t%s\n', num2MonthMap(monthKey),...
+        corrCoefLow, corrCoefHigh, corrCoefPerMonthTransformed(monthKey),...
+        rejectionTestStr);
+    fprintf('p-value: %.4f\n', ...
+        2*min([tcdf(corrCoefPerMonthTransformed(monthKey), dof),...
+        1- tcdf(corrCoefPerMonthTransformed(monthKey), dof)]))
+    if monthKey == length(corrCoefPerMonthTransformed)        
+        fprintf('\n\n');
+    end
+    
+    
+    % Student distribution plot for the monthly r
+    figure();
+    % the values of x to calculate the t statistic on (values of the 
+    % student distribution)
+    tStatisticRange = -tBoundOnXAxis:tStep:tBoundOnXAxis;
+    tPdfValues = tpdf(tStatisticRange, dof);
+    plot(tStatisticRange, tPdfValues);
+    title({['T-statistic derived from the transformation of ',...
+        'r_{rain, temperature} for ', num2MonthMap(monthKey)]; ...
+        ['The ', ...
+        num2str(100*(1-alpha)) ,...
+        '% ci is noted by the two vertical lines']});
+    xline([corrCoefLow, corrCoefHigh], '-', ...
+        {'$\frac{a}{2}\%$','(1-$\frac{a}{2})\%$'} , 'Color', 'r', ...
+        'interpreter', 'latex', 'LabelOrientation', 'Horizontal');
+    xline(corrCoefPerMonthTransformed(monthKey), '-', ...
+        {'Original sample r'}, 'Color', 'k');
+    
+end
+
 
 %% Random permutation test
 % to check if r_(rain, temperature) = 0 (=> (rain, temp) = uncorrelated)
@@ -48,15 +122,6 @@ end
 % Number of randomised samples
 L = 1000;
 
-% Significance level of the test
-alpha = 0.05;
-
-
-% Mapping numbers to months
-keySet = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]; 
-valueSet = {'January', 'February', 'March', 'April', 'May', 'June', ...
-    'July', 'August', 'September', 'October', 'November', 'December'};
-num2MonthMap = containers.Map(keySet,valueSet);
 
 % Dims: (L samples) x (Number of months)
 % (i, j) contains the correlation coefficient of the i-th randomised sample 
@@ -120,3 +185,5 @@ end
 % being permutated (rainDataRandPerm) whereas the temperature data 
 % remain as are to eliminate the correlation (make the data 
 % according to the null hypothesis.
+
+% Notes: for alpha = 0.1, the 
