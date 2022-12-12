@@ -42,25 +42,24 @@ valueSet = {'January', 'February', 'March', 'April', 'May', 'June', ...
 num2MonthMap = containers.Map(keySet,valueSet);
 
 
-%% Parametric test
-% Transformation of sample correlation coefficients (r) into statistic t
-% following the student distribution
-% the degrees of freedom of the studentised statistic is equal to 
-% the number of observations on which the correlation coefficient
-% is calculated.
+% The tests below check if the temperature and rain are
+% uncorrelated in Thessaloniki for the years 1959-1997
+
+%% Parametric test 
+% Formula for the degrees of freedom of the studentised correlation 
+% coefficient (number of bivariate obsevations to calculate r on minus 2
 dof = numOfRows-2;
 
+% Transformation of sample correlation coefficients (r) per month into 
+% statistic t following the student distribution
 corrCoefPerMonthTransformed = ...
     corrCoefPerMonthOriginal.*sqrt((numOfRows-2)./(1-corrCoefPerMonthOriginal.^2));
-% disp('corrCoefPerMonthTransformed:');
-% disp(corrCoefPerMonthTransformed);
-% disp('length(corrCoefPerMonthTransformed):')
-% disp(length(corrCoefPerMonthTransformed));
 
+% The bounds to plot the t statistic on and its corresponding pdf 
 tBoundOnXAxis = 5; 
 tStep = 0.1;
     
-% for each month
+% For each month
 for monthKey = 1:length(corrCoefPerMonthTransformed)
     % Console output for the parametric test per month
     if monthKey == 1
@@ -68,14 +67,13 @@ for monthKey = 1:length(corrCoefPerMonthTransformed)
         fprintf(['Month\tParametric ci\tOriginal sample r\tHypothesis '...
             'test\n'])
     end
-%     if monthKey == 2
-%         error('Check if the first title is correct'); 
-%     end
-    % If the statistic is inside  the parametric ci, the paramertic 
-    % hypothesis test is rejected if the real value of the statistic lies
-    % outside
+    
+    % Parametric ci calculation
     corrCoefLow = tinv(alpha/2, dof);
     corrCoefHigh = tinv(1-alpha/2, dof);
+    
+    % If the statistic lies outside the parametric ci, the
+    % hypothesis of non correlation is rejected
     if corrCoefPerMonthTransformed(monthKey) < corrCoefLow ...
         || corrCoefPerMonthTransformed(monthKey) > corrCoefHigh
         rejectionTestStr = 'rejected';
@@ -94,10 +92,10 @@ for monthKey = 1:length(corrCoefPerMonthTransformed)
     end
     
     
-    % Student distribution plot for the monthly r
+    % Plot the student distribution for the monthly r 
     figure();
     % the values of x to calculate the t statistic on (values of the 
-    % student distribution)
+    % student pdf)
     tStatisticRange = -tBoundOnXAxis:tStep:tBoundOnXAxis;
     tPdfValues = tpdf(tStatisticRange, dof);
     plot(tStatisticRange, tPdfValues);
@@ -186,4 +184,5 @@ end
 % remain as are to eliminate the correlation (make the data 
 % according to the null hypothesis.
 
-% Notes: for alpha = 0.1, the 
+% Notes: the tests agree in their hypotheses testing about the temperature
+% and rain being zero (uncorrelated).
