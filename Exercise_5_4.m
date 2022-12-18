@@ -11,7 +11,8 @@ airDensity = importArray(:, 1);
 % Attention for the values of the speed of light.
 % They are the differences from the speed of light in vacuum
 speedOfLightNormalized = importArray(:, 2);
-speedOfLight = speedOfLightNormalized + 299000; 
+scaleDownVal = 299000;
+speedOfLight = speedOfLightNormalized + scaleDownVal; 
 
 
 %% (a)
@@ -43,7 +44,8 @@ b0 = mean(speedOfLight) - b1*mean(airDensity);
 fprintf(['(b)\nb.1 The linear model estimation for the variables ',...
         'is: \nc = %.2f*d + (%.2f))\n'], b1, b0);
 
-plot(airDensity, b0 + b1*airDensity);
+lineWidthVal = 1.5;
+plot(airDensity, b0 + b1*airDensity, 'Linewidth', lineWidthVal);
 hold on;
 
 %% (b.2) 95% parametric ci for b0, b1
@@ -69,7 +71,8 @@ sigmaB1 = sigmaE/std(airDensity);
 b1CILow = b1 - tVal * sigmaB1;
 b1CIHigh = b1 + tVal * sigmaB1;
 
-fprintf('b.2\nParametric ci for b0: [%3.f, %.3f]\n', b0CILow, b0CIHigh);
+fprintf('b.2\nParametric ci for b0: [%3.f, %.3f] + %d\n', ...
+    b0CILow-scaleDownVal, b0CIHigh-scaleDownVal, scaleDownVal);
 fprintf('Parametric ci for b1: [%3.f, %.3f]\n\n', b1CILow, b1CIHigh);
 
 %% (c)
@@ -77,14 +80,102 @@ fprintf('Parametric ci for b1: [%3.f, %.3f]\n\n', b1CILow, b1CIHigh);
 %% for the mean light speed with 95% confidence and for a single 
 %% sobservation
 
-%% (c.2) Make a prediction based on the model for a specific air 
-%% density value
-%% Do the same for a single observation
+% CI prediction for the mean speed of light for a specific value of the air
+% density
+ciOfMeanSpeedOfLightLow = b0 + b1*airDensity - tVal * sigmaE * ...
+    sqrt(1/n+((airDensity - mean(airDensity)).^2)/var(airDensity));
+ciOfMeanSpeedOfLightHigh = b0 + b1*airDensity + tVal * sigmaE * ...
+    sqrt(1/n+((airDensity - mean(airDensity)).^2)/var(airDensity));
+
+% CI prediction for a single observation of the speed of light for a 
+% specific value of the air density
+ciOfSpeedOfLightLow = b0 + b1*airDensity - tVal * sigmaE * ...
+    sqrt(1+ 1/n+((airDensity - mean(airDensity)).^2)/var(airDensity));
+ciOfSpeedOfLightHigh = b0 + b1*airDensity + tVal * sigmaE * ...
+    sqrt(1+ 1/n+((airDensity - mean(airDensity)).^2)/var(airDensity));
+
+
+plot(airDensity, ciOfSpeedOfLightLow, '--', 'Color', 'r', 'Linewidth', ...
+    lineWidthVal);
+plot(airDensity, ciOfSpeedOfLightHigh, '--', 'Color', 'r', 'Linewidth', ...
+    lineWidthVal);
+plot(airDensity, ciOfMeanSpeedOfLightLow, '--', 'Color', 'k', ...
+    'Linewidth', lineWidthVal);
+plot(airDensity, ciOfMeanSpeedOfLightHigh, '--', 'Color', 'k', ...
+    'Linewidth', lineWidthVal);
+
+legend('', 'Linear model', 'CI limits for a new speed of light value', ...
+    '', 'CI limits for the mean speed of light', '');
+
+%% (c.2) Make a prediction of a single observation of the speed of light 
+%% and its mean for a specific air density value based on the model. 
+%% Calculate the ci limits for the single observation and the mean as well.
+airDensityVal = 1.29;
+speedOfLightPred = b0 + b1*airDensityVal;
+
+predCILow = b0 + b1*airDensityVal - tVal * sigmaE * ...
+    sqrt(1 + 1/n+((airDensityVal - ...
+    mean(airDensity)).^2)/var(airDensity));
+disp(predCILow);
+predCIHigh = b0 + b1*airDensityVal + tVal * sigmaE * ...
+    sqrt(1 + 1/n+((airDensityVal - ...
+    mean(airDensity)).^2)/var(airDensity));
+
+predCILowForMean = b0 + b1*airDensityVal - tVal * sigmaE * ...
+    sqrt(1/n+((airDensityVal - ...
+    mean(airDensity)).^2)/var(airDensity));
+predCIHighForMean = b0 + b1*airDensityVal + tVal * sigmaE * ...
+    sqrt(1/n+((airDensityVal - ...
+    mean(airDensity)).^2)/var(airDensity));
+
+fprintf(['(c)\nc.2\n%.2f%% prediction of the ',...
+    'speed of light for \nair density = %.3f km/m^3: %.3f + %d ',...
+    'km/sec\n'], ...
+    (1-alpha)*100,...
+    airDensityVal, speedOfLightPred - scaleDownVal, scaleDownVal);
+
+fprintf(['CI for the mean of the speed of light: ',...
+    '[%.3f, %.3f] + %d\n'], predCILowForMean-scaleDownVal, ...
+    predCIHighForMean-scaleDownVal, scaleDownVal);
+
+fprintf(['CI for a single observation of the speed of light: ',...
+    '[%.3f, %.3f] + %d\n\n'], predCILow-scaleDownVal, ...
+    predCIHigh-scaleDownVal, scaleDownVal);
+
 
 
 %% (d) 
-%% (d.1) Check if the real values of each paremeter of the linear model is 
+%% (d.1) Real linear model between air density and speed of light:
+c = 299792.458;
+beta0 = c;
+d0 = 1.29;
+beta1 = c*(-0.00029/d0);
+fprintf(['(d)\nd.1\nReal model between air density and speed of light:\n',...
+    'c = %.3f * d + %.3f, where d is the air density\n'], beta1, beta0);
+
+
+%% (d.2) Check if the real values of each paremeter of the linear model is 
 %% inside the ci calculated from the bivariate sample
+if beta0 > b0CILow && beta0 < b0CIHigh
+    fprintf('The real value of beta0 = %.3f is inside \nthe %.2f%%',...
+        'ci [%.3f, %.3f] (calculated from ',...
+        'the sample)\n.', beta0, (1-alpha2)*100, b0CILow, b0CIHigh);
+else
+fprintf('The real value of beta0 = %.3f is not inside \nthe %.2f%%',...
+        'ci [%.3f, %.3f] (calculated from ',...
+        'the sample)\n.', beta0, (1-alpha2)*100, b0CILow, b0CIHigh);
+end
+   
+
+if beta1 > b1CILow && beta1 < b1CIHigh
+    fprintf('The real value of beta0 = %.3f is inside \nthe %.2f%%',...
+        'ci [%.3f, %.3f] (calculated from ',...
+        'the sample)\n.', beta1, (1-alpha2)*100, b1CILow, b1CIHigh);
+else
+fprintf('The real value of beta0 = %.3f is not inside \nthe %.2f%%',...
+        'ci [%.3f, %.3f] (calculated from ',...
+        'the sample)\n.', beta1, (1-alpha2)*100, b1CILow, b1CIHigh);
+end
 
 %% (d.2) Is the real mean value of the speed of light inside the ci for the
 %% mean of the light speed calculated on the interval of the air densities?
