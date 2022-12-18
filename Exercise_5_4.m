@@ -183,7 +183,7 @@ end
 %% mean of the light speed calculated on the interval of the air densities?
 
 figure();
-plot(airDensity, beta0+beta1.*airDensity);
+plot(airDensity, beta0+beta1.*airDensity, 'Linewidth', lineWidthVal);
 title(['Real linear model between c and d and prediction limits ',...
     'for the mean']);
 xlabel('Air density d (kg/m^3)', 'interpreter', 'tex');
