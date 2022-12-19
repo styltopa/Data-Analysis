@@ -186,8 +186,8 @@ figure();
 plot(airDensity, beta0+beta1.*airDensity, 'Linewidth', lineWidthVal);
 title(['Real linear model between c and d and prediction limits ',...
     'for the mean']);
-xlabel('Air density d (kg/m^3)', 'interpreter', 'tex');
-ylabel('Speed of light c (km/sec)');
+xlabel('Air density d(kg/m^3)', 'interpreter', 'tex');
+ylabel('Speed of light c(km/sec)');
 hold on
 plot(airDensity, ciOfMeanSpeedOfLightLow, '--', 'Color', 'k', ...
     'Linewidth', lineWidthVal);
@@ -197,3 +197,4 @@ legend('Real linear model between air density and speed of light', ...
     '', 'Ci of mean of speed of light based on the sample');
 
 fprintf('d.3\nThe limits for the mean contain the real linear model\n');
+
