@@ -25,6 +25,26 @@ b = regress(y, x);
 % Variance of errors
 errors = y - x*b;
 errorVar = var(errors);
+% normalised errors
+errorsNorm = errors./std(errors);
+
+figure(1);
+dotSize = 25;
+scatter(y, errorsNorm, dotSize, 'filled');
+yline(0, '-', 'Color', 'k');
+yline([-2, 2], '--', 'Color', 'k');
+
+title({'Diagnostic plot:'; ...
+    'Normalised errors of the full parameter linear regression model'});
+fontSize = 15;
+xlabel('$y_i$', 'interpreter', 'latex', 'FontSize', fontSize);
+ylabel('Normalised errors $e_i^*$', 'interpreter', 'latex', 'FontSize', ...
+    fontSize);
+ymin = -4;
+ymax = 4;
+ylim([ymin, ymax]);
+
+hold off;
 
 n = sampleSize;
 % k + 1: the number of parameters in the model
@@ -63,9 +83,24 @@ finalModel = stats.intercept + x(:, finalModelVector) * bStepFinal;
 errorsStep = y - finalModel;
 errorVarStep = var(errorsStep);
 
+errorsStepNorm = errorsStep/std(errorsStep);
+
+figure(2);
+dotSize = 25;
+scatter(y, errorsStepNorm, dotSize, 'filled');
+yline(0, '-', 'Color', 'k');
+yline([-2, 2], '--', 'Color', 'k');
+
+title({'Diagnostic plot:'; ...
+    'Normalised errors of the stepwise regression model'});
+fontSize = 15;
+xlabel('$y_i$', 'interpreter', 'latex', 'FontSize', fontSize);
+ylabel('Normalised errors $e_i^*$', 'interpreter', 'latex', 'FontSize', ...
+    fontSize);
+ylim([ymin, ymax]);
+hold off;
+
 % ajdR and adjR2 
-
-
 % k + 1: the number of parameters in the stepwise regression model
 k = length(bStepFinal) - 1;
 % formula for R2
@@ -87,4 +122,6 @@ fprintf(['Stepwise Linear Regression model:\n',...
 % data.
 % 2) When the penalty of the number of parameters is introduced, the 
 % stepwise model is favoured as it a smaller number of variables .
-
+% 3) The diagnostic plots of the two models are quite similar but not the
+% same. The same is true about the coefficients of determiantion (plain and
+% adjusted one)
