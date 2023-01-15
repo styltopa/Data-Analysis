@@ -12,16 +12,17 @@ close all;
 smallV = randn(10, 1);
 largeV = randn(100, 1);
 
-figure();
-% Discrete values of vector
+% The discrete values of the vector should be more or less than 10
 smallVSet = unique(smallV, 'stable');
 largeVSet = unique(largeV, 'stable');
 
-v = smallVSet;
-% v = largeVSet; 
+% Samplesize cases
+% v = smallVSet;
+v = largeVSet; 
 
-if length(v <= 10)
-    histogram(smallVec);
+if length(v) <= 10
     error('Small sample size to derive a histogram for');
-    
-    
+else 
+    figure();
+    histogram(v);
+end
