@@ -5,8 +5,9 @@
 % Project for academic year 2022-2023
 % Function 1 for Exercise 2
 
-
-function [CI ,CIbootstrap] = Group10Exe2Fun1(x)
+% Calculates the confidence interval with the parametric and the 
+% bootrap method
+function [CI, CIbootstrap] = Group10Exe2Fun1(x)
 % 	 removing Nan values
     idx  = isnan(x);
     x(idx) = [];
