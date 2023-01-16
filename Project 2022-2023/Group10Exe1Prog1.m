@@ -1,28 +1,25 @@
 % Stylianos Topalidis
 % AEM: 9613
 % Stamatis Harteros
-% AEM: 
+% AEM: 9516
 % Project for academic year 2022-2023
-% Function 1 for exercise 1
+% Exercise 1
 
 clc;
 clear;
 close all;
 
-smallV = randn(10, 1);
-largeV = randn(100, 1);
+data = table2array(readtable('Heathrow.xlsx'));
 
-% The discrete values of the vector should be more or less than 10
-smallVSet = unique(smallV, 'stable');
-largeVSet = unique(largeV, 'stable');
 
-% Samplesize cases
-% v = smallVSet;
-v = largeVSet; 
+[ci, ciBoot] = confidenceCalc(data3);
+function[CI ,CIbootstrap] = confidenceCalc(x)
+	idx  = isnan(x);
+    x(idx) = [];
 
-if length(v) <= 10
-    error('Small sample size to derive a histogram for');
-else 
-    figure();
-    histogram(v);
+    alpha = 0.05;
+    [~, ~, CI, ~] = ttest(x, mean(x), 'Alpha', alpha);
+    
+    nboot = 1000;
+    CIbootstrap = bootci(nboot, @mean, x);
 end
