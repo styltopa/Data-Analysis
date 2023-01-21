@@ -803,3 +803,9 @@ cov(A, B) % = [var(A), actualCovariance, actualCovariance, var(B)];
 
 - (Aν χαλάσεις το layout του matlab): Για επιστροφή στο default layout του matlab :
 Home -> Environment -> Layout -> Default 
+
+- Τo tab έιτουργεί ως autocomplete στο matlab. 
+
+(γ)
+Υπάρχει συγκεκριμένος μετασχηματισμός που δίνει από τον συντελεστή συσχέτισης την κατανομή student στην οποία αντιστοιχεί την κατανομή student.
+

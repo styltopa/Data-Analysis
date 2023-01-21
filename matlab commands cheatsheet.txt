@@ -37,8 +37,40 @@ hold off
 clf
 close all
 
+................ Tests ................ 
+ttest
+ttest2
+
+norminv	
+
+vartest
+chi2gof
+
+corr - για το συντελεστή συσχέτισης 
+corrcoef - για όλο το πίνακα συσχέτισης (περιέχει και τους άσσους στη διαγώνιο)
+(corr = corrcoef(1, 2) = corrcoef(2, 1) για τον πίνακα συσχέτισης μεταξύ δύο μεταβλητών Χ, Υ)
+
+bootstrap
+bootci
+
+bootSamCorrCoef = bootci(B, {@corr, yearsAndPPNotNan(:, 1), ...
+    yearsAndPPNotNan(:, 2)}, 'Alpha', alpha);
+
+regress
+stepwisefit (;)
+
+Εύρεση διαστήματος εμπιστοσύνης κανονικής κατανομής
+
 ................ Other commands ................
-- unique - μοναδικές τιμές 
+unique - μοναδικές τιμές 
+- Function handlers: capable = @(x)(USL-LSL)./(6*std(x));
+[x, y] = deal(arr1, arr2);
 
+length - για την μεγαλύτερη διάσταση του πίνακα.
+size - για όλες τις διαστάσεις του πίνακα.
 
-
+................ Ανάγνωση δεδομένων ................ 
+readtable (επιστρέφει δεδομένα πίνακα)
+table2array
+importdata (επιστρέφει τα δεδομένα σε struct)
+Τότε μπορείς να τα καλέσεις με τελεία και το αντίστοιχο field.
