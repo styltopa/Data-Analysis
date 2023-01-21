@@ -1,0 +1,44 @@
+Cheatsheet commands 
+
+................ Basic commands to check for usage: ................
+help <command-name>
+doc <command-name>
+
+- Remove nan values
+rmmissing(A) - removes missing values of A (NaN, undefined etc)
+
+................ Plots ................
+
+- figure
+bar (προσοχή το bar graph παίρνει τις συχνότητες εμφάνισης και όχι τις κανονικές τιμές όπως παίρνει το ιστόγραμμα). Ωστόσο, μπορείς να χρησιμοποιήσεις και το histogram για να φτιάξεις bar graph και ακόμη ακόμη να βάλεις κατηγορικά δεδομένα στον οριζόντιο άξονα.
+
+Για εμφάνιση δεδομένων ως plot με κατηγορικά δεδομένα.
+X = categorical(v, vSet, cellstr(num2str(unique(v, 'sorted'))));
+histogram(X, 'BarWidth', 0.5);
+
+
+histogram 
+scatter
+
+title
+legend
+xabel
+ylabel
+annotation (για boxes μέσα στο plot)
+xline
+yline
+xlim
+ylim
+
+hold on
+hold off
+
+
+clf
+close all
+
+................ Other commands ................
+- unique - μοναδικές τιμές 
+
+
+
