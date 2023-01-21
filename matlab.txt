@@ -800,3 +800,6 @@ cov(A, B) % = [var(A), actualCovariance, actualCovariance, var(B)];
 
 - Για να εμφανίσεις error: error(msg)
 
+
+- (Aν χαλάσεις το layout του matlab): Για επιστροφή στο default layout του matlab :
+Home -> Environment -> Layout -> Default 
