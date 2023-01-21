@@ -84,9 +84,15 @@ end
 sortedRandomisedCorr = sort([corrPerm; corrXY]);
 rankCorrXY = find(sortedRandomisedCorr == corrXY);
  
-median
-pValRandomisation = 2*min(rankCorrXY,  B-rankCorrXY)/B;
+if corrXY <= median(sortedRandomisedCorr) 
+    pValRandomisation = 2*corrXY/(B+1);
+elseif corrXY > median(sortedRandomisedCorr) 
+    pValRandomisation = 2*(1 - corrXY/(B+1));
+end
 
-
+figure();
+histogram(sortedRandomisedCorr);
+xline([corrXY, median(sortedRandomisedCorr)], '-', ...
+    {'original sample r', 'median r'});
 
 %% (d)
