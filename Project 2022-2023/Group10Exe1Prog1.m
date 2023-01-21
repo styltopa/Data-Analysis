@@ -12,7 +12,7 @@ close all;
 data = table2array(readtable('Heathrow.xlsx'));
 
 
-[ci, ciBoot] = confidenceCalc(data3);
+[ci, ciBoot] = confidenceCalc(data);
 function[CI ,CIbootstrap] = confidenceCalc(x)
 	idx  = isnan(x);
     x(idx) = [];

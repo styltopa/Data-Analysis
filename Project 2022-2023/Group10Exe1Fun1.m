@@ -9,6 +9,8 @@ clc;
 clear;
 close all;
 
+data = table2array(readtable('Heathrow.xlsx'));
+
 sampleSize = 100;
 intRange = 2;
 intOffset = 1;
@@ -16,25 +18,35 @@ intOffset = 1;
 smallV = round(intRange *rand(sampleSize , 1)) + intOffset;
 largeV = randn(sampleSize , 1);
 
-% The discrete values of the vector should be more or less than 10
-smallV = unique(smallV, 'stable');
-largeVSet = unique(largeV, 'stable');
-
-% Samplesize cases (> 10 or < 10)
+% Vector samplesize cases (> 10 or < 10)
 v = smallV;
 %v = largeVSet; 
-data = table2array(readtable('Heathrow.xlsx'));
-disp(data(5))
-if length(v) <= 10
+% v = rmmissing(data(:, 12));
+
+
+% The discrete values of the vector 
+vSet = unique(v, 'sorted');
+
+
+if length(vSet) <= 10
     probabilityOfSuccess = mean(v)/365;
     numberOfTrials = 365;
-    [hBinomial, pBinomial] = chi2gof(v,'cdf',{@binocdf,numberOfTrials,probabilityOfSuccess});
-    [hDiscreteUniform, pDiscreteUniform] = chi2gof(v,'cdf',{@unidcdf,max(v)});
+    [hBinomial, pBinomial] = chi2gof(v,'CDF',...
+        {@binocdf, numberOfTrials, probabilityOfSuccess});
+%     [hBinomial, pBinomial] = chi2gof(v,'CDF',...
+%         {@normcdf, mean(v), std(v)});
+
+    [hDiscreteUniform, pDiscreteUniform] = chi2gof(v,'cdf',...
+        {@unidcdf,max(v)});
     figure();
-    bar(v);
-    title({'Bar graph of values in sample';[ 'p-value for binomial dist.: ', ...
+    X = categorical(v, vSet, cellstr(num2str(vSet)));
+    
+    histogram(X, 'BarWidth', 0.5);
+    title({'Bar graph of values in sample';...
+        [ 'p-value for binomial dist.: ', ...
         num2str(pBinomial)];...
-        ['p-value for discrete uniform dist.:', num2str(pDiscreteUniform)]});
+        ['p-value for discrete uniform dist.:',...
+        num2str(pDiscreteUniform)]});
      xlabel('Values');
     ylabel('Frequencies')
 end
