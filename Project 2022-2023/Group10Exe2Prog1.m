@@ -12,7 +12,6 @@ close all;
 data = table2array(readtable('Heathrow.xlsx'));
 
 
-% 
 % for the first 9 indexes of the data
 % data starts from the second column
 years = data(:,1);
@@ -34,7 +33,6 @@ x(idx) = [];
 for colIndex = 1:numOfFeatures 
     [ci(colIndex, :), ciBoot(colIndex, :)] = ...
      Group10Exe2Fun1(dataAfter1973(:, colIndex+1));
-
 end
 %array that contains the data between the years 1949 and 1958
 data49_58 = data(index49_59(1):index49_59(end),:);

@@ -12,7 +12,9 @@ close all;
 data = table2array(readtable('Heathrow.xlsx'));
 
 sampleSize = 100;
-intRange = 2;
+% the number of unique values should be the quite high for the p-value to
+% be computed.
+intRange = 9;
 intOffset = 1;
 % values from intOffset to intOffset + range
 smallV = round(intRange *rand(sampleSize , 1)) + intOffset;
@@ -33,9 +35,6 @@ if length(vSet) <= 10
     numberOfTrials = 365;
     [hBinomial, pBinomial] = chi2gof(v,'CDF',...
         {@binocdf, numberOfTrials, probabilityOfSuccess});
-%     [hBinomial, pBinomial] = chi2gof(v,'CDF',...
-%         {@normcdf, mean(v), std(v)});
-
     [hDiscreteUniform, pDiscreteUniform] = chi2gof(v,'cdf',...
         {@unidcdf,max(v)});
     figure();
