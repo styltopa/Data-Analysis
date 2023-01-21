@@ -46,12 +46,47 @@ B = 1000;
 
 %% (c)
 
-% Parametric
+% P-value calculation
+% (c.1) 
+% Parametric method
+
+% length of the vectors without the Nan values
 n = length(yearsAndPPNotNan(:, 1));
 % formula for the statistic calculated from correlation coefficient r
 tStatCorrCoef = corrXY*sqrt((n-2)/(1-corrXY^2));
 dof = length(yearsAndPPNotNan(:, 1)) - 2;
 
 % p-value of the test
-pVal = min(tcdf(tStatCorrCoef, dof), 1-tcdf(tStatCorrCoef, dof));
+pValTtest = min(tcdf(tStatCorrCoef, dof), 1-tcdf(tStatCorrCoef, dof));
 
+
+% (c.2) 
+% Randomisation method
+corrPerm = nan(B, 1);
+
+
+% for each randomised sample
+for i = 1:B
+    % includes the i-th randomised nx2 sample
+    yearsAndPPNotNanPerm = nan(n, 2);
+    
+    % permuted indices of the randomised samples
+    permInds = randperm(n);
+    
+    % we randomise only one column of the two (the first in this case)
+    % the second one remains as is
+    yearsAndPPNotNanPerm = yearsAndPPNotNan(permInds, 1);
+    % i-th correlation coefficient
+    corrPerm(i) = corr(yearsAndPPNotNanPerm, ...
+        yearsAndPPNotNan(:, 2));
+end
+
+sortedRandomisedCorr = sort([corrPerm; corrXY]);
+rankCorrXY = find(sortedRandomisedCorr == corrXY);
+ 
+median
+pValRandomisation = 2*min(rankCorrXY,  B-rankCorrXY)/B;
+
+
+
+%% (d)
