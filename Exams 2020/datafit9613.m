@@ -11,9 +11,9 @@ x = data(:, 1);
 y = data(:, 2);
 
 % regress
-linData = [onesCol, x];
-[b, ~, ~, ~, stats] = regress(y, linData);
-yModel  = linData*b;
+% linData = [onesCol, x];
+% [b, ~, ~, ~, stats] = regress(y, linData);
+% yModel  = linData*b;
 
 % fitlm
 yModelStruct = fitlm(x, y);
@@ -26,7 +26,8 @@ b = yModelStruct.Coefficients.Estimate;
 % remember the 1 in the predicted data for the intercept
 xToEstimateYOn = [1, 500];
 yPred = xToEstimateYOn*b;
-adjR2 = 
+R2 = yModelStruct.Rsquared.Ordinary;
+adjR2 = yModelStruct.Rsquared.Adjusted;
 
 %% (a) Plot cost against quantity
 
