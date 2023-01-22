@@ -65,6 +65,30 @@ bootSamCorrCoef = bootci(B, {@corr, yearsAndPPNotNan(:, 1), ...
     yearsAndPPNotNan(:, 2)}, 'Alpha', alpha);
 
 regress
+
+% regress
+linData = [onesCol, x];
+[b, ~, ~, ~, stats] = regress(y, linData);
+yModel  = linData*b;
+
+
+fitlm
+
+
+% fitlm
+yModelStruct = fitlm(x, y);
+% Predictions from the model
+yModel = yModelStruct.Fitted;
+% Estimates of parameters b
+b = yModelStruct.Coefficients.Estimate;
+
+% Preciction of another value based on the model derived
+% remember the 1 in the predicted data for the intercept
+xToEstimateYOn = [1, 500];
+yPred = xToEstimateYOn*b;
+adjR2 = 
+
+
 stepwise (έχει αντίστοιχο app που χρησιμοποιεί)
 stepwisefit (έχει μόνο την συνάρτηση και επιστρέφει μόνο τους συντελεστές του γραμμικού -ως προς τους συντελεστές μοντέλο-)
 
