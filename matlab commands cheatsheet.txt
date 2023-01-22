@@ -18,19 +18,27 @@ histogram
 Για εμφάνιση δεδομένων ως plot με κατηγορικά δεδομένα.
 X = categorical(v, vSet, cellstr(num2str(unique(v, 'sorted'))));
 histogram(X, 'BarWidth', 0.5);
+
 scatter
+boxplot (βλ. αρχείο με εξετάσεις Σεπτ: Exams September 2020/Runlogtranstest9613.m)
+subplots (βλ. αρχείο με εξετάσεις Σεπτ: Exams September 2020/Runlogtranstest9613.m)
 
 surf (για επιφάνεια)
 
-title
+title (4.3 για τίτλο σε δύο σειρές και με latex)
+title({['(c.b): M = ', num2str(M),' samples of power given that'];...
+    ['V and f are correlated with ',...
+    '$$\rho_{V, f}$$ =', ...
+    num2str(rhoVf)]}, 'interpreter', 'latex');
+
 legend
 xabel
-ylabel
-annotation (για boxes μέσα στο plot)
+ylabel (latex στο ylabel: άσκηση 5.6)
+annotation (για boxes μέσα στο plot, άσκηση 5.9)
 xline
-yline
+yline (4.3 για να γράψεις πάνω στο yline και να αλλάξεις θέση στο μήνυμα πάνω στη γραμμή)
 xlim
-ylim
+ylim 
 
 hold on
 hold off
@@ -72,7 +80,7 @@ linData = [onesCol, x];
 yModel  = linData*b;
 
 
-fitlm (αντί της regress)
+fitlm (αντί της regress, βλ. αρχείο με εξετάσεις Σεπτ: Exams September 2020/datafit9613.m)
 
 % fitlm
 yModelStruct = fitlm(x, y);
