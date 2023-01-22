@@ -72,8 +72,7 @@ linData = [onesCol, x];
 yModel  = linData*b;
 
 
-fitlm
-
+fitlm (αντί της regress)
 
 % fitlm
 yModelStruct = fitlm(x, y);
@@ -86,7 +85,8 @@ b = yModelStruct.Coefficients.Estimate;
 % remember the 1 in the predicted data for the intercept
 xToEstimateYOn = [1, 500];
 yPred = xToEstimateYOn*b;
-adjR2 = 
+R2 = yModelStruct.Rsquared.Ordinary;
+adjR2 = yModelStruct.Rsquared.Adjusted;
 
 
 stepwise (έχει αντίστοιχο app που χρησιμοποιεί)
