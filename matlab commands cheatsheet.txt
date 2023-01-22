@@ -19,7 +19,7 @@ histogram
 X = categorical(v, vSet, cellstr(num2str(unique(v, 'sorted'))));
 histogram(X, 'BarWidth', 0.5);
 
-scatter
+scatter (βλ. αρχείο 5.6 για filled και αλλαγμένο μέγεθος τελείων)
 boxplot (βλ. αρχείο με εξετάσεις Σεπτ: Exams September 2020/Runlogtranstest9613.m)
 subplots (βλ. αρχείο με εξετάσεις Σεπτ: Exams September 2020/Runlogtranstest9613.m)
 
@@ -31,12 +31,12 @@ title({['(c.b): M = ', num2str(M),' samples of power given that'];...
     '$$\rho_{V, f}$$ =', ...
     num2str(rhoVf)]}, 'interpreter', 'latex');
 
-legend
+legend (5.1)
 xabel
 ylabel (latex στο ylabel: άσκηση 5.6)
 annotation (για boxes μέσα στο plot, άσκηση 5.9)
 xline
-yline (4.3 για να γράψεις πάνω στο yline και να αλλάξεις θέση στο μήνυμα πάνω στη γραμμή)
+yline (4.3 για να γράψεις πάνω στο yline, να αλλάξεις θέση στο μήνυμα πάνω στη γραμμή, 5.1 για να βάλεις latex στη γραμμή)
 xlim
 ylim 
 
@@ -98,7 +98,8 @@ adjR2 = yModelStruct.Rsquared.Adjusted;
 
 
 stepwise (έχει αντίστοιχο app που χρησιμοποιεί)
-stepwisefit (έχει μόνο την συνάρτηση και επιστρέφει μόνο τους συντελεστές του γραμμικού -ως προς τους συντελεστές μοντέλο-)
+stepwisefit (έχει μόνο την συνάρτηση και επιστρέφει μόνο τους συντελεστές του γραμμικού -ως προς τους συντελεστές μοντέλο-, βλ. άσκηση 5.9)
+stepwiselm - δίνει όπως και η fitlm αυτόματα την R2 και ajdR2.
 
 Εύρεση διαστήματος εμπιστοσύνης κανονικής κατανομής
 
