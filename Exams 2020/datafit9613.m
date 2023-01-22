@@ -10,10 +10,10 @@ onesCol = ones(n, 1);
 x = data(:, 1);
 y = data(:, 2);
 
-% % regress
-% linData = [onesCol, x];
-% [b, ~, ~, ~, stats] = regress(y, linData);
-% yModel  = linData*b;
+% regress
+linData = [onesCol, x];
+[b, ~, ~, ~, stats] = regress(y, linData);
+yModel  = linData*b;
 
 % fitlm
 yModelStruct = fitlm(x, y);
