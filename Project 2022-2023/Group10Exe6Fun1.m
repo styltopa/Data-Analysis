@@ -2,7 +2,7 @@
 % Stamatios Charteros
 % AEM:9516
 % Project for academic year 2022-2023
-% Function for exercise 4
+% Function for exercise 6
 
 clc;
 clear;
