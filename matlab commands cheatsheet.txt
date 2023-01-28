@@ -22,6 +22,10 @@ histogram(X, 'BarWidth', 0.5);
 scatter (βλ. αρχείο 5.6 για filled και αλλαγμένο μέγεθος τελείων)
 boxplot (βλ. αρχείο με εξετάσεις Σεπτ: Exams September 2020/Runlogtranstest9613.m)
 subplots (βλ. αρχείο με εξετάσεις Σεπτ: Exams September 2020/Runlogtranstest9613.m)
+tiledlayout - είναι σαν το subplot (βλ. Group10Exe6Fun1.m της εργασίας)
+sgtitle - υπερτίτλος για ένα figure όταν έχεις πολλαπλά subplots.
+nexttile - χρήση με τη συνάρτηση tiledlayout Group10Exe6Fun1.m της εργασίας
+axes - (όχι η συνάρτηση καθ'εαυτή- αλλά για χειρισμό properties αντικειμένων αξόνων - βλ. Group10Exe6Fun1.m της εργασίας πχ. ax.InnerPosition είναι η παράμετρος του axes object που ορίζει τη θέση x, y στο figure (από 0 ως 1) και το πλάτος (κατα τον οριζόντιο άξονα) και ύψος (κατα τον κατακόρυφο άξονα) του κάθε figure ή plot ή subplot ή tile εντός tiledlayout).
 
 surf (για επιφάνεια)
 
@@ -111,6 +115,10 @@ unique - μοναδικές τιμές
 length - για την μεγαλύτερη διάσταση του πίνακα.
 size - για όλες τις διαστάσεις του πίνακα. (size(A, 2) για το πλήθος στηλών δηλαδή δεύτερη διάσταση του πίνακα)
 find - για εύρεση συγκεκριμένων indices.
+cellstr (μετατροπή string σε cell)
+cell2mat (δεν υπάρχει cell2arr)
+num2cell (μετατροπή αριθμού σε στοιχείο cell)
+containers.Map - για mapping από στοιχείο σε στοιχείο (βλ. αρχείο Group10Exe6Prog1.m εργασίας).
 
 ................ Data read/import ................ 
 readtable (επιστρέφει δεδομένα πίνακα)
