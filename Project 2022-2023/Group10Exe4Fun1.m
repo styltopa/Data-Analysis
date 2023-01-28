@@ -8,10 +8,21 @@ clc;
 clear;
 close all;
 
+
 data = table2array(readtable('Heathrow.xlsx'));
-x = data(:, 4);
+dataNamesStruct = importdata('Heathrow.xlsx');
+dataNames = string(dataNamesStruct.textdata.Sheet1);
+dataNamesPeriphrastic = {'Year', 'Mean annual temperature', ...
+        'Mean annual maximum temperature', 'Mean annual minimum temperature', ...
+        'Total annual rainfall or snowfall', 'Mean annual wind velocity', ...
+        'Number of days with rain', 'Number of days with snow', ...
+        'Number of days with wind', 'Number of days with fog', ...
+        'Number of days with tornado', 'Number of days with hail'};
+
+[xId, yId] = deal(3, 4);
+x = data(:, xId);
 % the fifth column, can be replaced with y
-y = data(:, 3);
+y = data(:, yId);
 
 % without the year column
 numOfCols = size(data, 2);
@@ -44,6 +55,68 @@ for comboElem1 = 2:numOfCols
     end
 end
 
+alpha = 0.05;
+
+% check if the four tests agree on if the variables are linearly correlated
+% 0 means that the null hypothesis is not rejected
+% 1 means that the test of the column 
+% (fisher parametric, bootstrap, student parametric, randomisation) 
+% rejects the null hypothesis
+
+testArray = nan(numOfCombos, 4);
+% the vector element equals 1 if the tests agree
+agreementVector = nan(numOfCombos, 1);
+
+for comboCounter = 1:numOfCombos
+    % bootstrap testing for zero correlation
+    if 0 < outCIBoot(comboCounter, 1)  || 0 > outCIBoot(comboCounter, 2)  
+        testArray(comboCounter, 1) = 1;
+    else
+        testArray(comboCounter, 1) = 0;
+    end
+    % parametric test based on the Fisher transform of r
+    if 0 < outCIBoot(comboCounter, 1)  || 0 > outCIBoot(comboCounter, 2)   
+        testArray(comboCounter, 2) = 1;
+    else
+        testArray(comboCounter, 2) = 0;
+    end
+    % parametric test based on the student statistic of r
+    if outPVal(comboCounter, 1) < alpha   
+        testArray(comboCounter, 3) = 1;
+    else
+        testArray(comboCounter, 3) = 0;
+    end
+    % randomisation test 
+    if outPVal(comboCounter, 2) < alpha   
+        testArray(comboCounter, 4) = 1;
+    else
+        testArray(comboCounter, 4) = 0;
+    end
+    
+    % check if the four tests agree
+    if testArray(comboCounter, :) == ones(1, 4)
+        agreementVector(comboCounter) = 1;
+    elseif testArray(comboCounter, :) == zeros(1, 4)
+        agreementVector(comboCounter) = 1;
+    else
+        agreementVector(comboCounter) = 0;
+    end
+end
+
+fprintf("The tests agree on %d out of the %d feature combinations.\n", ...
+     length(find(agreementVector==1)), numOfCombos);
+       
+% to find the minimum p values for the null hypothesis that the data 
+% are uncorrelaated meaning the variables which are most likely to be
+% linearly correlated
+[pValParamSorted, indicesParam] = sort(outPVal(:, 1));
+[pValRandomisedSorted, indicesRandomised] = sort(outPVal(:, 2));
+
+minPValParamCombos = comboArr(indicesParam(1:3), :);
+minPValRandomisedCombos  = comboArr(indicesRandomised(1:3), :);
+
+minPValParamCombosNames = dataNames(minPValParamCombos); 
+minPValRandomisedCombosNames = dataNames(minPValRandomisedCombos); 
 
 function [outCIParam, outCIBoot, outPVal, outLength] = ciPvalsAndLength(x, y)
     %% (a) Find the Nan pair values and remove them
