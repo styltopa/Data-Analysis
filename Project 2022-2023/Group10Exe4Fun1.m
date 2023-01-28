@@ -18,8 +18,12 @@ numOfCols = size(data, 2);
 comboCounter = 0;
 
 numOfCombos = nchoosek(numOfCols-1, 2);
-columnsArr = nan(numOfCombos, 2);
-outCI = nan(numOfCombos, 2, 2);
+% array containing the indexes of the data columns to be checked for linear
+% correlation
+comboArr = nan(numOfCombos, 2);
+
+outCIParam = nan(numOfCombos, 2);
+outCIBoot = nan(numOfCombos, 2);
 outPVal = nan(numOfCombos, 2);
 outLength = nan(numOfCombos, 2);
 for comboElem1 = 2:numOfCols
@@ -28,18 +32,18 @@ for comboElem1 = 2:numOfCols
             continue
         end
         comboCounter = comboCounter + 1;
-        columnsArr(comboCounter, 1) = comboElem1;
-        columnsArr(comboCounter, 2) = comboElem2;
-%         [outCI(comboCounter, :), outPVal(comboCounter, :), ...
-%             outLength(comboCounter, :)] = ciPvalsAndLength(x, y);
-          [outCI(comboCounter, :, ), ~, ~] = ciPvalsAndLength(x, y);
+        comboArr(comboCounter, 1) = comboElem1;
+        comboArr(comboCounter, 2) = comboElem2;
+        x = data(:, comboArr(comboCounter, 1));
+        y = data(:, comboArr(comboCounter, 2));
+        [outCIParam(comboCounter, :), ...
+           outCIBoot(comboCounter, :), ...
+           outPVal(comboCounter, :), ...
+           outLength(comboCounter, :)] = ciPvalsAndLength(x, y);
         
     end
 end
 
-% figure();
-% dotSize = 15;
-% scatter(x, y, dotSize, 'filled');
 
 function [outCIParam, outCIBoot, outPVal, outLength] = ciPvalsAndLength(x, y)
     %% (a) Find the Nan pair values and remove them
