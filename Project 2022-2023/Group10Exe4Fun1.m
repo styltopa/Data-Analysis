@@ -36,6 +36,7 @@ for comboElem1 = 2:numOfCols
         comboArr(comboCounter, 2) = comboElem2;
         x = data(:, comboArr(comboCounter, 1));
         y = data(:, comboArr(comboCounter, 2));
+        disp(comboArr(comboCounter, :));
         [outCIParam(comboCounter, :), ...
            outCIBoot(comboCounter, :), ...
            outPVal(comboCounter, :), ...
@@ -52,7 +53,6 @@ function [outCIParam, outCIBoot, outPVal, outLength] = ciPvalsAndLength(x, y)
 
     % taking out the Nan rows
     xAndYNotNan = rmmissing(xAndY); 
-
 
     %% (b) 95% ci with parametric (Fisher) and bootstrap
 
@@ -124,7 +124,12 @@ function [outCIParam, outCIBoot, outPVal, outLength] = ciPvalsAndLength(x, y)
     elseif corrXY > median(sortedRandomisedCorr) 
         pValRandomisation = 2*(1 - rankCorrXY/(B+1));
     end
-
+%     disp(["pValTTest:", size(pValTTest)]);
+%     disp(["pValRandomisation", size(pValRandomisation)]);
+    if size(pValTTest) ~= size(pValRandomisation)
+%        disp("iteration:", pValRandomisation); 
+       disp("pValRandomisation:", pValRandomisation);
+    end
 %     figure();
 %     histogram(sortedRandomisedCorr);
 %     xline([corrXY, median(sortedRandomisedCorr)], '-', ...
@@ -134,6 +139,7 @@ function [outCIParam, outCIBoot, outPVal, outLength] = ciPvalsAndLength(x, y)
     % bootstrap ci is in a column instead of a row vector
     outCIParam = ciParam; 
     outCIBoot = transpose(bootSamCorrCoefCI);
+    
     outPVal = [pValTTest, pValRandomisation];
     outLength = n;
-    end
+end
