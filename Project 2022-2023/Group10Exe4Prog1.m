@@ -169,8 +169,8 @@ end
 % However, the other pairs with significant linear correlation are
 % sometimes TS and GR as before, PP and RA (rainfall or snowfall
 % and number of rainy days respectively) V and FG (wind velocity and 
-% number of days with fog).
+% number of days with fog) and others.
 % Therefore, the randomisation test does not always yield the same results 
 % as far as the pairs with the second and third most significant non zero 
-% correlation.
+% correlation go.
 
