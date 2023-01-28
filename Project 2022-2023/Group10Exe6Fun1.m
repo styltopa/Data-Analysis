@@ -12,12 +12,22 @@ close all;
 data = table2array(readtable('Heathrow.xlsx'));
 dataNamesStruct = importdata('Heathrow.xlsx');
 dataNames = string(dataNamesStruct.textdata.Sheet1);
-
+dataNamesPeriphrastic = {'Year', 'Mean annual temperature', ...
+    'Mean annual maximum temperature', 'Mean annual minimum temperature', ...
+    'Total annual rainfall or snowfall', 'Mean annual air velocity', ...
+    'Number of days with rain', 'Number of days with snow', ...
+    'Number of days with wind', 'Number of days with fog', ...
+    'Number of days with tornado', 'Number of days with hail'};
+ 
+% Map of short names of features to their periphrastic names
+M = containers.Map(dataNames, dataNamesPeriphrastic);
+    
 [xId, yId] = deal(2, 4);
 
 
 [x, y] = deal(data(:, xId), data(:, yId));
 [xName, yName] = deal(dataNames(xId), dataNames(yId));
+[xNameP, yNameP] = deal(values(M, {xName}), values(M, {yName}));
 
 % namesPeriphrastically = [Mean annual tempearature
 xAndY = [x, y];
@@ -38,8 +48,9 @@ adjR2 = yModelStruct.Rsquared.Adjusted;
 figure();
 dotSize = 15;
 scatter(x, y, dotSize, 'filled');
-title({'Scatter diagram between variables:' ; 
-    xName + " and " + yName});
+title({'Scatter diagram between:' ; 
+    xNameP + " (" + xName + ")" + ...
+    " and " + yNameP + " (" + yName + ")" });
 xlabel(xName);
 ylabel(yName);
 hold on;
