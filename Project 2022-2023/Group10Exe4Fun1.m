@@ -25,7 +25,7 @@ comboArr = nan(numOfCombos, 2);
 outCIParam = nan(numOfCombos, 2);
 outCIBoot = nan(numOfCombos, 2);
 outPVal = nan(numOfCombos, 2);
-outLength = nan(numOfCombos, 2);
+outLength = nan(numOfCombos, 1);
 for comboElem1 = 2:numOfCols
     for comboElem2 = comboElem1:numOfCols
         if comboElem1 == comboElem2
@@ -36,11 +36,10 @@ for comboElem1 = 2:numOfCols
         comboArr(comboCounter, 2) = comboElem2;
         x = data(:, comboArr(comboCounter, 1));
         y = data(:, comboArr(comboCounter, 2));
-        disp(comboArr(comboCounter, :));
         [outCIParam(comboCounter, :), ...
            outCIBoot(comboCounter, :), ...
            outPVal(comboCounter, :), ...
-           outLength(comboCounter, :)] = ciPvalsAndLength(x, y);
+           outLength(comboCounter)] = ciPvalsAndLength(x, y);
         
     end
 end
@@ -73,7 +72,7 @@ function [outCIParam, outCIBoot, outPVal, outLength] = ciPvalsAndLength(x, y)
 
     % Bootstrap ci
     B = 1000;
-    [bootSamCorrCoefCI, bootSamCorrCoefStat] = bootci(B, {@corr, ...
+    bootSamCorrCoefCI = bootci(B, {@corr, ...
         xAndYNotNan(:, 1), ...
         xAndYNotNan(:, 2)}, 'Alpha', alpha);
 
@@ -102,14 +101,12 @@ function [outCIParam, outCIBoot, outPVal, outLength] = ciPvalsAndLength(x, y)
 
     % for each randomised sample
     for i = 1:B
-        % includes the i-th randomised nx2 sample
-        xAndYNotNanPerm = nan(n, 2);
-
         % permuted indices of the randomised samples
         permInds = randperm(n);
 
         % we randomise only one column of the two (the first in this case)
         % the second one remains as is
+        % includes the i-th randomised nx2 sample
         xAndYNotNanPerm = xAndYNotNan(permInds, 1);
         % i-th correlation coefficient
         corrPerm(i) = corr(xAndYNotNanPerm, ...
@@ -117,8 +114,15 @@ function [outCIParam, outCIBoot, outPVal, outLength] = ciPvalsAndLength(x, y)
     end
 
     sortedRandomisedCorr = sort([corrPerm; corrXY]);
-    rankCorrXY = find(sortedRandomisedCorr == corrXY);
-
+    % get the mean index of all 
+    rankCorrXY = find(sortedRandomisedCorr == corrXY, 1);
+    if size(rankCorrXY) ~= 1
+        % if many indices with the same value exist, 
+        % then we get the mean of those indices and round it to 
+        % get the actual rank of the matrix.
+        rankCorrXY = round(mean(rankCorrXY));
+    end
+    
     if corrXY <= median(sortedRandomisedCorr) 
         pValRandomisation = 2*rankCorrXY/(B+1);
     elseif corrXY > median(sortedRandomisedCorr) 
@@ -126,10 +130,11 @@ function [outCIParam, outCIBoot, outPVal, outLength] = ciPvalsAndLength(x, y)
     end
 %     disp(["pValTTest:", size(pValTTest)]);
 %     disp(["pValRandomisation", size(pValRandomisation)]);
-    if size(pValTTest) ~= size(pValRandomisation)
+%     if size(pValTTest) ~= size(pValRandomisation)
 %        disp("iteration:", pValRandomisation); 
-       disp("pValRandomisation:", pValRandomisation);
-    end
+%        disp("pValRandomisation:")
+%        disp(pValRandomisation);
+%     end
 %     figure();
 %     histogram(sortedRandomisedCorr);
 %     xline([corrXY, median(sortedRandomisedCorr)], '-', ...
