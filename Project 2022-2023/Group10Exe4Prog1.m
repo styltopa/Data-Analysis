@@ -148,14 +148,29 @@ end
 
 
 %% Remarks
+%% Number of agreement on all zero correlation tests among all combinations
 % The zero linear correlation tests do not agree on all combinations of
 % features (see console).
 
+%% Most significant linear correlated pairs according to the 
+%% parametric test
 % The parametric test rejects the zero correlation between the temperature 
 % and the maximum temperature (T and TM), the number of windy days and the 
 % number of days with hail (TS and GR) and the mean annual temerature and
 % the days with snowfall (T and SN)
 
-% The randomisation test seems to agree with the parametric on the case of 
-% T and TM for all 
-% 
+
+%% Most significant linear correlated pairs according to the 
+%% randomisation test
+% The randomisation test does not yield the same results for the p-value
+% for every execution of the code.
+% It seems to agree with the parametric on the case of 
+% T and TM for all runs of the code.
+% However, the other pairs with significant linear correlation are
+% sometimes TS and GR as before, PP and RA (rainfall or snowfall
+% and number of rainy days respectively) V and FG (wind velocity and 
+% number of days with fog).
+% Therefore, the randomisation test does not always yield the same results 
+% as far as the pairs with the second and third most significant non zero 
+% correlation.
+
