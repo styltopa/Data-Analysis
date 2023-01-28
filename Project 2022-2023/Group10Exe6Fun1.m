@@ -40,9 +40,18 @@ function adjR2 = Group10Exe6Fun1(x, y, xName, yName, xNameP, yNameP, ax)
 %     text(min(xlim), max(ylim),subPlotNames(i), 'Horiz','left', 'Vert','top')
 %     
     annotationFontSize = 12;
-    [posX, posY, width, height] = deal(0.65, 0.75, 0.1, 0.1); 
+%     [posX, posY, width, height] = deal(0.65, 0.75, 0.1, 0.1); 
+%     annotPosAndDims = [posX, posY, width, height];
+
+    posArr = ax.InnerPosition;
+    xOffset = 0.1;
+    yOffset = 0.05;
+    [posX, posY, width, height] = deal(posArr(1) + posArr(3) - xOffset, ...
+        posArr(2) + posArr(4) - yOffset,...
+        0.1 ,...
+        0.1); 
     annotPosAndDims = [posX, posY, width, height];
-%     annotPosAndDims = [ax.xlim, ax.ylim];
+    
     annotation('textbox', annotPosAndDims, 'String', ...
         {"$AdjR^2$: "+ adjR2}, ...
         'interpreter', 'latex', ...
