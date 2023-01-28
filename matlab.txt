@@ -303,6 +303,10 @@ xline([meanY lamda], '-', {'actual mean', '\lambda'})
 - Τί χρησιμοποιούμε από τα δύο; Διπλά ή μονά αυτάκια (εισαγωγικά); Δηλαδή ' ή ";
 Πρέπει πάντα να χρησιμοποιείς μονά αυτάκια ('). Τα διπλά αυτάκια δίνουν error στην fprintf και ακόμη όταν έχεις έναν πίνακα αλφαριθμητικών που θέλεις να εμφανίσεις, δεν εμφανίζονται σωστά στον τίτλο και στον υπότιτλο.
 
+Μονά ή διπλά αυτάκια; μετά από αναζήτηση στο google:
+In MATLAB, single quotes ' ' are used to create char type variables, and double quotes " " are used to create string type variables.
+
+
 - Πρέπει να χρησιμοποείς διαφορετική xline τη φορά για να βάλεις στο ίδιο γράφημα κατακόρυφες γραμμές διαφορετικής μορφοποίησης
 πχ 
 	xline([ci(1), ci(2)],  '-', 'Color', 'b');
@@ -848,3 +852,4 @@ To dock: στο undocked παράθυρο: πατάς το τρίγωνο που
 - rmmissing(A) to remove missing values
 
 
+- cell2mat - για μετατροπή cell σε array.
