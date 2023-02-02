@@ -10,7 +10,3 @@ close all;
 
 data = table2array(readtable("Heathrow.xlsx"));
 
-years = data(:, 1);
-% example feature
-info = data(:, 2);
-pArr = Group10Exe3Fun1(years, info);
