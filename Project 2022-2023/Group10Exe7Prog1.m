@@ -18,76 +18,37 @@ dataNamesPeriphrastic = {'Year', 'Mean annual temperature', ...
         'Number of days with wind', 'Number of days with fog', ...
         'Number of days with tornado', 'Number of days with hail'};
 
+models = string(["1st degree polynomial (linear) model", ...
+    "2nd degree polynomial model", "3rd degree polynomial model", ...
+    "Intrinsically linear power law model", ...
+    "Intrinsically linear logarithmic model", ...
+    "Intrinsically linear exponential model"]);
+
+
+% Feature index used to explain the fog variable
+xIndex = 3;
+% Days with fog per year
+yIndex = 10;
+fogData = data(:, yIndex); 
+featureIndexesMat = [2, 3, 4, 5, 6, 7, 8, 9, 12];
+fprintf('The best model for %s (%s):\n\n',...
+    dataNames(yIndex), string(dataNamesPeriphrastic(yIndex)));
     
-% x = data(:, 2); 
-% y = data(:, 4);
-
-% problematic case for exponential
-x = data(:, 2); 
-y = data(:, 8);
-
-
-xAndY = [x, y];  %removing NaN values
-xAndYNotNan = rmmissing(xAndY);
-x= xAndYNotNan(:,1);
-y= xAndYNotNan(:,2);
-
-% %% Polynomial regression model
-% x2  = [x(:) x(:).^2 x(:).^3];
-% yModelStruct = fitlm(x2, y, 'RobustOpts', 'ols');
-% yModel = yModelStruct.Fitted;
-% adjR2 = yModelStruct.Rsquared.Adjusted;
-% 
-% 
-% dotSize = 15;
-% scatter(x, y, dotSize, 'filled');
-% % the title regards the independent variable (horizontal axis)
-% 
-% [X, I] =sort(x);
-% Y = nan(size(X, 1), 1);
-% for i=1:length(I)
-%     Y(i) = yModel(I(i));
-% end
-% 
-% hold on;
-% plot(X, Y, 'Color', 'r', 'LineWidth', 1.5);
-% 
-% 
-% annotationFontSize = 12;
-% xOffset = 0.1;
-% yOffset = 0.05;
-% [posX, posY, width, height] = deal(0.65, 0.7, 0.1 ,0.1); 
-% annotPosAndDims = [posX, posY, width, height];
-% annotation('textbox', annotPosAndDims, 'String', ...
-%     {"$AdjR^2$: "+ adjR2}, ...
-%     'interpreter', 'latex', ...
-%     'FontSize', ...
-%     annotationFontSize);
-% 
-% hold off
-
-%% Inherently linear exponential model
-xTransformed = x;
-yTransformed = log(y);
-
-yModelStructTransformed = fitlm(xTransformed, yTransformed, 'RobustOpts', 'ols');
-yModelTransformed = yModelStructTransformed.Fitted;
+for i = 1:length(featureIndexesMat)
+    
+    featureData = data(:, featureIndexesMat(i));
+    [adjR2Max , modelIndex] = Group10Exe7Fun1(featureData, fogData,...
+        dataNames(featureIndexesMat(i)), ...
+        dataNamesPeriphrastic(featureIndexesMat(i)));
+    fprintf(['Given the feature %s (%s)\n',...
+        'is the %s\n',...
+        'with adjR2 = %.4f\n\n'], ...
+        dataNames(featureIndexesMat(i)), ...
+        string(dataNamesPeriphrastic(featureIndexesMat(i))),...
+        models(modelIndex), adjR2Max);
+end
 
 
-bTransformed = yModelStructTransformed.Coefficients.Estimate;
-b = bTransformed;
-b(1) = exp(bTransformed(1));
-
-yModel = b(1)*exp(b(2)*x);
-
-[X, I] =sort(x);
-Y = yModel(I);
-
-dotSize = 15;
-scatter(x, y, dotSize, 'filled');
-title('Exponential inherent model');
-hold on;
-plot(X, Y, 'Color', 'r', 'LineWidth', 1.5);
-hold off;
-
+ 
+   
 
