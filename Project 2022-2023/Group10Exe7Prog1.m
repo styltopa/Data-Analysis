@@ -50,5 +50,8 @@ end
 
 
  
-   
+% Remarks
+% The features that seem to explain the FG (Number of days with fog) 
+% in the best way are RA (Number of days with rain) with adjR2 = 0.3490  
+% and then T (Mean annual temperature) with adjR2 = 0.2133
 
