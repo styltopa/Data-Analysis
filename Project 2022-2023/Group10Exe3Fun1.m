@@ -12,9 +12,9 @@
 % Function 1 for exercise 3
 
 function [p1, p2, discIndex] = Group10Exe3Fun1(years, feature)
-%% (a) Detect the first point of discontinuity
+%% (a) Detect the point of discontinuity
 
-% Index of discontinuity (
+% Index of discontinuity 
 discIndex = nan; 
 for i=2:length(years)
     if years(i) ~= years(i-1)+1
@@ -29,11 +29,11 @@ end
 if isnan(discIndex)
     error("There should be a discontinuity point.");
 end
-%% (b)
+%% (b) Split of the data features in two vectors
 X1 = feature(1:discIndex-1);
 X2 = feature(discIndex:end);
 % We test if either X1 or X2 are filled only with NaN values
-% If so, we cannot compare the periods from the given feature
+% If so, we cannot compare the periods of the given feature
 isnan1 = isnan(X1);
 isnan2 = isnan(X2);
 nan1 = 1;
@@ -64,14 +64,15 @@ if nan1 == 0 && nan2 == 0
     %  removing Nan values
     idx2  = isnan(X2);
     X2(idx2) = [];
-    %% (g,d)
+    %% (c, d) Parametric and randomisation test, 
+    %% Calculate and return the p-values
     [~,p1] = ttest2(X1,X2);
 
     B=1000;
     % Array X3 contains all the values of both period vectors X1 and X2
     X3 = zeros(length(X1)+length(X2),1);
-    X3(1:length(X1))=X1;
-    X3(length(X1)+1:end)=X2;
+    X3(1:length(X1))= X1;
+    X3(length(X1)+1:end)= X2;
     originalDiffOfMeans = mean(X1) - mean(X2);
 
     Y1 = NaN(B,length(X1));
