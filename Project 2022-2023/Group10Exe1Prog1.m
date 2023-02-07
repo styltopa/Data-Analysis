@@ -3,8 +3,10 @@
 % Stamatis Charteros
 % AEM:9516
 % Project for academic year 2022-2023
-% Program for exercise 1
+% Program 1 for exercise 1
+
 clc;
+clear;
 close all;
 
 
@@ -18,8 +20,8 @@ dataNamesPeriphrastic = {'Year', 'Mean annual temperature', ...
         'Number of days with wind', 'Number of days with fog', ...
         'Number of days with tornado', 'Number of days with hail'};
 
+% Significance level for the tests
 alpha = 0.05;
-p = zeros(11,2);
 fprintf(['Tests if the feature follows given distributions \n',...
     'and length of unique values in input vector.\n',...
     '(uniform or normal\n',...
@@ -27,6 +29,8 @@ fprintf(['Tests if the feature follows given distributions \n',...
     'and discrete \n',...
     'uniform for small number of unique values of the input vector)\n']); 
 fprintf('The tests are held at a %.2f significance level\n\n', alpha);
+
+p = zeros(11,2);
 for i = 1:11
     fprintf('%s (%s) follows the:\n', dataNames(i+1), ...
         string(dataNamesPeriphrastic(i+1)));

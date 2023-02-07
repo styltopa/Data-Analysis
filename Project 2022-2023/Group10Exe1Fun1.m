@@ -17,7 +17,6 @@ function [p1,p2] = Group10Exe1Fun1(data)
             {@binocdf,numberOfTrials,probabilityOfSuccess});
         [~, pDiscreteUniform] = chi2gof(data,'cdf',{@unidcdf,max(data)});
         figure();
-    %     bar(data);
         X = categorical(data, vSet, cellstr(num2str(unique(vSet, 'sorted'))));
         histogram(X, 'BarWidth', 0.5);
         title({'Bar graph of values in sample'; ['p-value for binomial dist.: ', ...
