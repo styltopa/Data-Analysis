@@ -86,20 +86,20 @@ for yIndex = 1:length(dataIndices)
         num2cell(secondMaxAdjR2);
     
 end
-fprintf(['The table below contains all features as dependent ',...
-    'variables\n',...
-    'For each of them, there are presented two features explaining \n',...
-    'the dependent variable in the best way (highest adjR2 of \n',...
-    'their respective linear models)']);
+fprintf(['The table below contains all features as dependent \n',...
+    'variables in the first column.\n',...
+    'The other columns contain the two features best explaining\n',...
+    'the dependent one and their respective linear models'' adjR2.\n\n']);
 
-disp(' Dependent      Most significant       AdjR2       Second most significant      AdjR2');
-disp(' Variable    independent variable                         variable');
+disp(' Dependent    Most ''explaining''    AdjR2          Second most          AdjR2');
+disp(' Variable          feature                    ''explaining'' feature');
+
 disp(dependentFeatureAndAdjR2Arr);
 
 
 
 %% Remarks
-%% T and TM
+%% Vari
 % The temperature T is mostly dependent on the maximum temperature TM 
 % and vice versa which is to be expected. 
 
