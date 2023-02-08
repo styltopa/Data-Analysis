@@ -3,7 +3,7 @@
 % Stamatis Charteros
 % AEM: 9516
 % Project for academic year 2022-2023
-% Program 1 for Exercise 2
+% Program for Exercise 2
 
 clc;
 clear;

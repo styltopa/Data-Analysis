@@ -1,8 +1,9 @@
+% Stylianos Topalidis
 % AEM: 9613
 % Stamatios Charteros
 % AEM:9516
 % Project for academic year 2022-2023
-% Program for exercise 6
+% Program for Exercise 6
 
 
 clc;

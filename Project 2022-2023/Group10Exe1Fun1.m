@@ -3,7 +3,7 @@
 % Stamatis Charteros
 % AEM:9516
 % Project for academic year 2022-2023
-% Function 1 for exercise 1
+% Function for exercise 1
 
 function [p1,p2] = Group10Exe1Fun1(data)
     

@@ -1,8 +1,9 @@
+% Stylianos Topalidis
 % AEM: 9613
 % Stamatios Charteros
 % AEM:9516
 % Project for academic year 2022-2023
-% Function for exercise 4
+% Function for Exercise 4
 
 function [outCIParam, outCIBoot, outPVal, outLength] = Group10Exe4Fun1(x, y)
     %% (a) Find the Nan pair values and remove them
@@ -87,17 +88,6 @@ function [outCIParam, outCIBoot, outPVal, outLength] = Group10Exe4Fun1(x, y)
     elseif corrXY > median(sortedRandomisedCorr) 
         pValRandomisation = 2*(1 - rankCorrXY/(B+1));
     end
-%     disp(["pValTTest:", size(pValTTest)]);
-%     disp(["pValRandomisation", size(pValRandomisation)]);
-%     if size(pValTTest) ~= size(pValRandomisation)
-%        disp("iteration:", pValRandomisation); 
-%        disp("pValRandomisation:")
-%        disp(pValRandomisation);
-%     end
-%     figure();
-%     histogram(sortedRandomisedCorr);
-%     xline([corrXY, median(sortedRandomisedCorr)], '-', ...
-%         {'original sample r', 'median r'});
 
     %% (d)
     % bootstrap ci is in a column instead of a row vector

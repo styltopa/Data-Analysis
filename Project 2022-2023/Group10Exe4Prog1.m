@@ -1,8 +1,9 @@
+% Stylianos Topalidis
 % AEM: 9613
 % Stamatios Charteros
 % AEM:9516
 % Project for academic year 2022-2023
-% Program for exercise 4
+% Program for Exercise 4
 
 
 clc;
@@ -20,10 +21,10 @@ dataNamesPeriphrastic = {'Year', 'Mean annual temperature', ...
         'Number of days with wind', 'Number of days with fog', ...
         'Number of days with tornado', 'Number of days with hail'};
 
-[xId, yId] = deal(3, 4);
-x = data(:, xId);
-% the fifth column, can be replaced with y
-y = data(:, yId);
+% [xId, yId] = deal(3, 4);
+% x = data(:, xId);
+% % the fifth column, can be replaced with y
+% y = data(:, yId);
 
 % without the year column
 numOfCols = size(data, 2);
@@ -148,11 +149,11 @@ end
 
 
 %% Remarks
-%% Number of agreement on all zero correlation tests among all combinations
+%% 1. Number of agreement on all zero correlation tests among all combinations
 % The zero linear correlation tests do not agree on all combinations of
 % features (see console).
 
-%% Most significant linear correlated pairs according to the 
+%% 2. Most significant linear correlated pairs according to the 
 %% parametric test
 % The parametric test rejects the zero correlation between the temperature 
 % and the maximum temperature (T and TM), the number of windy days and the 
@@ -160,16 +161,16 @@ end
 % the days with snowfall (T and SN)
 
 
-%% Most significant linear correlated pairs according to the 
+%% 3. Most significant linear correlated pairs according to the 
 %% randomisation test
 % The randomisation test does not yield the same results for the p-value
 % for every execution of the code.
 % It seems to agree with the parametric on the case of 
 % T and TM for all runs of the code.
 % However, the other pairs with significant linear correlation are
-% sometimes TS and GR as before, PP and RA (rainfall or snowfall
-% and number of rainy days respectively) V and FG (wind velocity and 
-% number of days with fog) and others.
+% sometimes TS and GR as with the parametric test, PP and RA 
+% (rainfall or snowfall and number of rainy days respectively), V and FG 
+% (wind velocity and number of days with fog) and others.
 % Therefore, the randomisation test does not always yield the same results 
 % as far as the pairs with the second and third most significant non zero 
 % correlation go.

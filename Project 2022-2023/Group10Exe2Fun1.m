@@ -3,7 +3,7 @@
 % Stamatios Charteros
 % AEM:9516
 % Project for academic year 2022-2023
-% Function 1 for exercise 2
+% Function for exercise 2
 
 function [CI ,CIbootstrap] = Group10Exe2Fun1(x)
 %   Remove Nan values

@@ -3,7 +3,7 @@
 % Stamatis Charteros
 % AEM: 9516
 % Project for academic year 2022-2023
-% Exercise 2
+% Function for Exercise 3
 
 % AEM: 9613
 % Stamatios Charteros
