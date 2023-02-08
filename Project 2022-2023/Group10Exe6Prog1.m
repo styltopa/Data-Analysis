@@ -60,7 +60,7 @@ for yIndex = 1:length(dataIndicesToConsider)
         adjR2V(yIndex) = Group10Exe6Fun1(x, y, xName, yName, xNameP, ax); 
     end
  
-    [adjR2VSorted, maxAdjR2SortedInd] = sort(adjR2V);
+    [adjR2VSorted, adjR2SortedInd] = sort(adjR2V);
     % maximum adjR2 among independent features
     maxAdjR2 = adjR2VSorted(end);
     % second maximum adjR2 among independent features
@@ -68,13 +68,13 @@ for yIndex = 1:length(dataIndicesToConsider)
     
     % Indices of independent feature giving linear model with 
     % maximum and second maximum adjR2 
-    maxAdjR2SortedInd = maxAdjR2SortedInd(end);
-    secondMaxAdjR2Ind = maxAdjR2SortedInd(end-1);
+    maxAdjR2Ind = adjR2SortedInd(end);
+    secondMaxAdjR2Ind = adjR2SortedInd(end-1);
     
     %
     dependentFeatureAndAdjR2Arr(yIndex, 1) = cellstr(yName);
     dependentFeatureAndAdjR2Arr(yIndex, 2) = cellstr(dataNames(maxAdjR2Ind));
-    dependentFeatureAndAdjR2Arr(yIndex, 3) = num2cell(adjR2);
+    dependentFeatureAndAdjR2Arr(yIndex, 3) = num2cell(maxAdjR2);
 
     dependentFeatureAndAdjR2Arr(yIndex, 4) = cellstr(dataNames(secondMaxAdjR2Ind));
     dependentFeatureAndAdjR2Arr(yIndex, 5) = num2cell(secondMaxAdjR2);
@@ -125,9 +125,9 @@ for yIndex = 1:length(dataIndicesToConsider)
 %         end
 %     end
 end
-% disp(' Dependent      Most significant       AdjR2');
-% disp(' Variable    independent variable');
-% disp(dependentFeatureAndAdjR2Arr);
+disp(' Dependent      Most significant       AdjR2');
+disp(' Variable    independent variable');
+disp(dependentFeatureAndAdjR2Arr);
 
 
 
