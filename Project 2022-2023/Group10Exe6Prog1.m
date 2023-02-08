@@ -43,6 +43,7 @@ for yIndex = 1:length(dataIndices)
     sgtitle("Scatter diagrams for the " + ...
         dataNamesPeriphrastic(yCol)+ " (" + dataNames(yCol) + ")");
     subplotCounter = 0;
+    adjR2V = -100*ones(length(dataIndices), 1);
     % independent variable index
     for xIndex = 1:size(dataIndices, 2)
         % the column number of the independent variable in the original data
@@ -85,8 +86,14 @@ for yIndex = 1:length(dataIndices)
         num2cell(secondMaxAdjR2);
     
 end
-disp(' Dependent      Most significant       AdjR2');
-disp(' Variable    independent variable');
+fprintf(['The table below contains all features as dependent ',...
+    'variables\n',...
+    'For each of them, there are presented two features explaining \n',...
+    'the dependent variable in the best way (highest adjR2 of \n',...
+    'their respective linear models)']);
+
+disp(' Dependent      Most significant       AdjR2       Second most significant      AdjR2');
+disp(' Variable    independent variable                         variable');
 disp(dependentFeatureAndAdjR2Arr);
 
 
