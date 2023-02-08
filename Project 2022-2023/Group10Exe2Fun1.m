@@ -1,7 +1,7 @@
 % Stylianos Topalidis
 % AEM: 9613
 % Stamatios Charteros
-% AEM:9516
+% AEM: 9516
 % Project for academic year 2022-2023
 % Function for exercise 2
 
