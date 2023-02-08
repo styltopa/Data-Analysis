@@ -68,10 +68,14 @@ for i = 1:numOfFeatures
     end
 end
 
-%%We notice that the 2 confidence intervals are not significantly different
-%amongst themselves for any of the indicators. We notice a large change in the middle
-%value of the period 1949-1958 for the indicators "Number of days with rain"
-%and "Number of days with fog"
+%% Remarks 
+% 1. We notice that the two confidence intervals from the parametric and the 
+% the bootstrap tests are quite similar for all features. 
+% 2. The mean values of the features RA (Number of days with 
+% rain) and FG (Number of days with fog) in the first period 
+% deviate significantly from 
+% the estimated confidence interval from the tests (parametric and
+% bootstrap) in the second period. 
 
 
 
