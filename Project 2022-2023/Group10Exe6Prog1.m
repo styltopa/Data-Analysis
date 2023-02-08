@@ -99,18 +99,17 @@ disp(dependentFeatureAndAdjR2Arr);
 
 
 %% Remarks
-%% Vari
-% The temperature T is mostly dependent on the maximum temperature TM 
-% and vice versa which is to be expected. 
+%% Pairs of variables explaining one another well
+% 1. The mean annual temperature T is easily explained by the maximum 
+% annual temperature TM and vice versa which is to be expected. The 
+% relative adjR2 is high (~0.9539)
+% 2. The number of windy days TS and the number of days with hail (GR) also
+% seem to be explaining one another but with a much lower adjR2 (~0.4107)
+% which is rather insignificant.
 
 %% All other variables
 % All other variables are not explained well by a linear model of just 
 % one other variable as the adjR2 falls below what would be a significant 
 % threshold (0.8 for example).
 
-%% Outliers in the distribution of the variables
-% It must be noted that in the case of the minimum temperature Tm and 
-% the days with fog, there seem to exist outliers which reduce the adjR2 
-% value for all independent
-% variables that try to explain it (see subplots in figure 3 and 9).
-% All other variables seem to not have significant outliers.
+
