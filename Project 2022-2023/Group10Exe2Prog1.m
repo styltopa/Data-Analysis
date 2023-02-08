@@ -3,7 +3,7 @@
 % Stamatis Charteros
 % AEM: 9516
 % Project for academic year 2022-2023
-% Exercise 2
+% Program 1 for Exercise 2
 
 clc;
 clear;
@@ -43,8 +43,9 @@ end
 data49_58 = data(index49_59(1):index49_59(end),:);
 %      removing Nan values
 data49_58(isnan(data49_58))=0;
-%mean values for the first 9 features between the years 1949 and 1958
 
+%mean values for the first 9 features between the years 1949 and 1958
+% mean49_58 = 
 for i=1:numOfFeatures
     mean49_58(i) = mean(data49_58(1:end,i+1));
 end
