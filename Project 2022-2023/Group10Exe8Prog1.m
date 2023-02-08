@@ -1,11 +1,11 @@
 % Stylianos Topalidis
 % AEM: 9613
-% Stamatis Charteros
+% Stamatios Charteros
 % AEM: 9516
 % Project for academic year 2022-2023
-% Program 1 for Exercise 8
+% Program for exercise 8
 
-% Estimated time is ~85 seconds.
+% Estimated time to run: ~85 seconds.
 
 close all;
 clear;

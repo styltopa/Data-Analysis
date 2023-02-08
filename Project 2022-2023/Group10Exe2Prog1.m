@@ -1,9 +1,11 @@
 % Stylianos Topalidis
 % AEM: 9613
-% Stamatis Charteros
+% Stamatios Charteros
 % AEM: 9516
 % Project for academic year 2022-2023
-% Program for Exercise 2
+% Program for exercise 2
+
+% Estimated time to run: ~1 second.
 
 clc;
 clear;
@@ -13,11 +15,8 @@ data = table2array(readtable('Heathrow.xlsx'));
 dataNamesStruct = importdata('Heathrow.xlsx');
 dataNames = string(dataNamesStruct.textdata.Sheet1);
 
-
-
-% 
-% for the first 9 indexes of the data
-% data starts from the second column
+ 
+% For the first 9 indexes of the data
 years = data(:,1);
 rowIndex1973 = find(years == 1973);
 dataAfter1973 = data(rowIndex1973:end, :);
@@ -45,7 +44,7 @@ data49_58 = data(index49_59(1):index49_59(end),:);
 data49_58(isnan(data49_58))=0;
 
 %mean values for the first 9 features between the years 1949 and 1958
-% mean49_58 = 
+mean49_58 = nan(numOfFeatures, 1);
 for i=1:numOfFeatures
     mean49_58(i) = mean(data49_58(1:end,i+1));
 end
@@ -76,6 +75,4 @@ end
 % deviate significantly from 
 % the estimated confidence interval from the tests (parametric and
 % bootstrap) in the second period. 
-
-
 

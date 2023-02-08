@@ -5,11 +5,11 @@
 % Project for academic year 2022-2023
 % Program for Exercise 4
 
+% Estimated time to run: ~12 seconds.
 
 clc;
 clear;
 close all;
-
 
 data = table2array(readtable('Heathrow.xlsx'));
 dataNamesStruct = importdata('Heathrow.xlsx');
@@ -171,7 +171,3 @@ end
 % sometimes TS and GR as with the parametric test, PP and RA 
 % (rainfall or snowfall and number of rainy days respectively), V and FG 
 % (wind velocity and number of days with fog) and others.
-% Therefore, the randomisation test does not always yield the same results 
-% as far as the pairs with the second and third most significant non zero 
-% correlation go.
-

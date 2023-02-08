@@ -3,7 +3,7 @@
 % Stamatis Charteros
 % AEM: 9516
 % Project for academic year 2022-2023
-% Function 1 for Exercise 8
+% Function for exercise 8
 
 function[adjR2Poly, pVal] = Group10Exe8Fun1(x,y)
     %% (a) Remove Nan values

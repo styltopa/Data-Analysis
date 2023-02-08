@@ -5,6 +5,8 @@
 % Project for academic year 2022-2023
 % Program for exercise 1
 
+% data starts from the second column
+
 clc;
 clear;
 close all;

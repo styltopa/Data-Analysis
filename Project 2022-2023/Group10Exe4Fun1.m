@@ -3,7 +3,7 @@
 % Stamatios Charteros
 % AEM:9516
 % Project for academic year 2022-2023
-% Function for Exercise 4
+% Function for exercise 4
 
 function [outCIParam, outCIBoot, outPVal, outLength] = Group10Exe4Fun1(x, y)
     %% (a) Find the Nan pair values and remove them
