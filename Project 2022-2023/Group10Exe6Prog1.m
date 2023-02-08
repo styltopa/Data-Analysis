@@ -4,7 +4,7 @@
 % AEM:9516
 % Project for academic year 2022-2023
 % Program for Exercise 6
-
+% Estimated time to run: ~16 seconds.
 
 clc;
 clear;
@@ -28,12 +28,13 @@ M = containers.Map(dataNames, dataNamesPeriphrastic);
 % one for the feature name, one for the independent variable explaining in
 % the best way the independent one
 % and one for the corresponding adjR2 of the linear model
-dependentFeatureAndAdjR2Arr = cell(9, 3);
+dependentFeatureAndAdjR2Arr = cell(9, 5);
     
 % take out the years index (1), the tornado index (11) 
 dataIndicesToConsider = [2, 3, 4, 5, 6, 7, 8, 9, 10, 12];
+adjR2V = nan(length(dataIndicesToConsider), 1);
 % dependent variable index
-for yIndex = 1:size(dataIndicesToConsider, 2)
+for yIndex = 1:length(dataIndicesToConsider)
     % the column number of the dependent variable in the original data
     yCol = dataIndicesToConsider(yIndex);
     numberOfLayouts = yIndex;
@@ -56,31 +57,79 @@ for yIndex = 1:size(dataIndicesToConsider, 2)
         xNameP = values(M, {xName});
         subplotCounter = subplotCounter + 1;
         ax = nexttile;
-        adjR2 = Group10Exe6Fun1(x, y, xName, yName, xNameP, ax);
-        
-        
-        % initialize the maximum adjR2 and find its maximum
-        % value among all independent variable for
-        % a specific variable
-        if subplotCounter == 1
-            maxAdjR2 = adjR2;
-            maxAdjR2IndependentVar = xCol;
-            dependentFeatureAndAdjR2Arr(yIndex, 1) = cellstr(yName);
-            dependentFeatureAndAdjR2Arr(yIndex, 2) = cellstr(xName);
-            dependentFeatureAndAdjR2Arr(yIndex, 3) = num2cell(adjR2);
-        end
-        if maxAdjR2 < adjR2
-            maxAdjR2 = adjR2;
-            maxAdjR2IndependentVar = xCol;   
-            dependentFeatureAndAdjR2Arr(yIndex, 1) = cellstr(yName);
-            dependentFeatureAndAdjR2Arr(yIndex, 2) = cellstr(xName);
-            dependentFeatureAndAdjR2Arr(yIndex, 3) = num2cell(adjR2);
-        end 
+        adjR2V(yIndex) = Group10Exe6Fun1(x, y, xName, yName, xNameP, ax); 
     end
+ 
+    [adjR2VSorted, maxAdjR2SortedInd] = sort(adjR2V);
+    % maximum adjR2 among independent features
+    maxAdjR2 = adjR2VSorted(end);
+    % second maximum adjR2 among independent features
+    secondMaxAdjR2 = adjR2VSorted(end-1);
+    
+    % Indices of independent feature giving linear model with 
+    % maximum and second maximum adjR2 
+    maxAdjR2SortedInd = maxAdjR2SortedInd(end);
+    secondMaxAdjR2Ind = maxAdjR2SortedInd(end-1);
+    
+    %
+    dependentFeatureAndAdjR2Arr(yIndex, 1) = cellstr(yName);
+    dependentFeatureAndAdjR2Arr(yIndex, 2) = cellstr(dataNames(maxAdjR2Ind));
+    dependentFeatureAndAdjR2Arr(yIndex, 3) = num2cell(adjR2);
+
+    dependentFeatureAndAdjR2Arr(yIndex, 4) = cellstr(dataNames(secondMaxAdjR2Ind));
+    dependentFeatureAndAdjR2Arr(yIndex, 5) = num2cell(secondMaxAdjR2);
+    
+    %     % initialize the maximum adjR2 and find its maximum
+%     % value among all independent variable for
+%     % a specific variable
+% 
+%     if subplotCounter == 1
+%         % initialisation of first and second best adjR2 among all
+%         % features
+%         maxAdjR2 = adjR2;
+%         secondMaxAdjR2 = adjR2;
+%         maxAdjR2IndependentVar = xCol;
+% 
+%         dependentFeatureAndAdjR2Arr(yIndex, 1) = cellstr(yName);
+%         dependentFeatureAndAdjR2Arr(yIndex, 2) = cellstr(xName);
+%         dependentFeatureAndAdjR2Arr(yIndex, 3) = num2cell(adjR2);
+% 
+%         dependentFeatureAndAdjR2Arr(yIndex, 4) = cellstr(xName);
+%         dependentFeatureAndAdjR2Arr(yIndex, 5) = num2cell(secondMaxAdjR2);
+%     elseif subplotCounter == 2
+%         secondMaxAdjR2 = adjR2;
+%         dependentFeatureAndAdjR2Arr(yIndex, 1) = cellstr(yName);
+%         dependentFeatureAndAdjR2Arr(yIndex, 2) = cellstr(xName);
+%         dependentFeatureAndAdjR2Arr(yIndex, 3) = num2cell(adjR2);
+%         dependentFeatureAndAdjR2Arr(yIndex, 4) = cellstr(xName);
+%         dependentFeatureAndAdjR2Arr(yIndex, 5) = num2cell(secondMaxAdjR2);
+%     end
+%     % For each new independent variable we check if the new adjR2
+%     % is the maximum or second maximum value
+%     if maxAdjR2 < adjR2
+%         secondMaxAdjR2 = maxAdjR2;
+%         maxAdjR2 = adjR2;
+%         maxAdjR2IndependentVar = xCol;   
+%         dependentFeatureAndAdjR2Arr(yIndex, 1) = cellstr(yName);
+%         dependentFeatureAndAdjR2Arr(yIndex, 2) = cellstr(xName);
+%         dependentFeatureAndAdjR2Arr(yIndex, 3) = num2cell(maxAdjR2);
+% 
+%         dependentFeatureAndAdjR2Arr(yIndex, 4) = cellstr(xName);
+%         dependentFeatureAndAdjR2Arr(yIndex, 5) = num2cell(secondMaxAdjR2);
+% 
+%     elseif maxAdjR2 > adjR2
+%         if secondMaxAdjR2 < adjR2
+%             secondMaxAdjR2 = maxAdjR2;
+%             dependentFeatureAndAdjR2Arr(yIndex, 4) = cellstr(xName);
+%             dependentFeatureAndAdjR2Arr(yIndex, 5) = num2cell(secondMaxAdjR2);
+%         end
+%     end
 end
-disp(' Dependent      Most significant       AdjR2');
-disp(' Variable    independent variable');
-disp(dependentFeatureAndAdjR2Arr);
+% disp(' Dependent      Most significant       AdjR2');
+% disp(' Variable    independent variable');
+% disp(dependentFeatureAndAdjR2Arr);
+
+
 
 %% Remarks
 %% T and TM
@@ -98,5 +147,3 @@ disp(dependentFeatureAndAdjR2Arr);
 % value for all independent
 % variables that try to explain it (see subplots in figure 3 and 9).
 % All other variables seem to not have significant outliers.
-
-
