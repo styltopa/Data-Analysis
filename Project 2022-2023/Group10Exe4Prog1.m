@@ -26,12 +26,12 @@ dataNamesPeriphrastic = {'Year', 'Mean annual temperature', ...
 % % the fifth column, can be replaced with y
 % y = data(:, yId);
 
-% without the year column
+% Without the year column
 numOfCols = size(data, 2);
 comboCounter = 0;
 
 numOfCombos = nchoosek(numOfCols-1, 2);
-% array containing the indexes of the data columns to be checked for linear
+% comboArr contains the indexes of the data columns to be checked for linear
 % correlation
 comboArr = nan(numOfCombos, 2);
 
@@ -59,36 +59,36 @@ end
 
 alpha = 0.05;
 
-% check if the four tests agree on if the variables are linearly correlated
+% Check if the four tests agree on if the variables are linearly correlated
 % 0 means that the null hypothesis is not rejected
 % 1 means that the test of the column 
 % (fisher parametric, bootstrap, student parametric, randomisation) 
 % rejects the null hypothesis
 
 testArray = nan(numOfCombos, 4);
-% the vector element equals 1 if the tests agree
+% The vector element equals 1 if the tests agree
 agreementVector = nan(numOfCombos, 1);
 
 for comboCounter = 1:numOfCombos
-    % bootstrap testing for zero correlation
+    % Bootstrap test for zero correlation
     if 0 < outCIBoot(comboCounter, 1)  || 0 > outCIBoot(comboCounter, 2)  
         testArray(comboCounter, 1) = 1;
     else
         testArray(comboCounter, 1) = 0;
     end
-    % parametric test based on the Fisher transform of r
+    % Parametric test based on the Fisher transform of r
     if 0 < outCIBoot(comboCounter, 1)  || 0 > outCIBoot(comboCounter, 2)   
         testArray(comboCounter, 2) = 1;
     else
         testArray(comboCounter, 2) = 0;
     end
-    % parametric test based on the student statistic of r
+    % Parametric test based on the student statistic of r
     if outPVal(comboCounter, 1) < alpha   
         testArray(comboCounter, 3) = 1;
     else
         testArray(comboCounter, 3) = 0;
     end
-    % randomisation test 
+    % Randomisation test 
     if outPVal(comboCounter, 2) < alpha   
         testArray(comboCounter, 4) = 1;
     else
@@ -110,9 +110,9 @@ fprintf(['The four zero linear correlation tests all agree on %d ',...
     'combinations.\n\n'],...
      length(find(agreementVector==1)), numOfCombos);
        
-% to find the minimum p values for the null hypothesis that the data 
-% are uncorrelaated meaning the variables which are most likely to be
-% linearly correlated
+% Find the minimum p values for the null hypothesis that the features
+% are uncorrelated (meaning the features that are most 
+% likely to be correlated)
 [pValParamSorted, indicesParam] = sort(outPVal(:, 1));
 [pValRandomisedSorted, indicesRandomised] = sort(outPVal(:, 2));
 
@@ -121,7 +121,7 @@ minPValRandomisedCombos  = comboArr(indicesRandomised(1:3), :);
 
 
 fprintf(['Most significant linearly dependent pairs \n', ...
-    '(rejection of the zero correlation coefficient) according to the:\n']);
+    '(rejection of the zero correlation) according to the:\n']);
 % Pairs of features with the most significant non zero correlation   
 % according to the parametric test
 fprintf(['Parametric test (student transformation of the correlation ',...
@@ -149,25 +149,25 @@ end
 
 
 %% Remarks
-%% 1. Number of agreement on all zero correlation tests among all combinations
+%% 1. Number of agreement on all zero correlation tests among all 
+%% combinations
 % The zero linear correlation tests do not agree on all combinations of
 % features (see console).
 
-%% 2. Most significant linear correlated pairs according to the 
-%% parametric test
+%% Most significant linearly correlated pairs according to the 
+%% 2. Parametric test
 % The parametric test rejects the zero correlation between the temperature 
 % and the maximum temperature (T and TM), the number of windy days and the 
-% number of days with hail (TS and GR) and the mean annual temerature and
-% the days with snowfall (T and SN)
+% number of days with hail (TS and GR) and the mean annual temperature and
+% the days with snowfall (T and SN) (see console)
 
 
-%% 3. Most significant linear correlated pairs according to the 
-%% randomisation test
+%% 3. Randomisation test
 % The randomisation test does not yield the same results for the p-value
 % for every execution of the code.
 % It seems to agree with the parametric on the case of 
 % T and TM for all runs of the code.
-% However, the other pairs with significant linear correlation are
-% sometimes TS and GR as with the parametric test, PP and RA 
+% However, the other two pairs with significant linear correlation are
+% sometimes TS and GR (same as with the parametric test), PP and RA 
 % (rainfall or snowfall and number of rainy days respectively), V and FG 
 % (wind velocity and number of days with fog) and others.

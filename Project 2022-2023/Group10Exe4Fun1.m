@@ -18,12 +18,11 @@ function [outCIParam, outCIBoot, outPVal, outLength] = Group10Exe4Fun1(x, y)
     % Correlation coefficient of the original sample
     corrXY = corr(xAndYNotNan(:, 1), xAndYNotNan(:, 2));
 
-    % Parametric ci with Fisher
-    % Fisher transform
+    % Parametric ci with Fisher transform
     corrCoefFisher = ...
         0.5.*log((1 + corrXY)./(1 - corrXY));
 
-    % the probabilities to calculate the inverse normal values on
+    % The probabilities to calculate the inverse normal values on
     alpha = 0.05;
     probArr = [alpha/2, 1-alpha/2];
     mu = corrCoefFisher;
@@ -40,12 +39,11 @@ function [outCIParam, outCIBoot, outPVal, outLength] = Group10Exe4Fun1(x, y)
     %% (c) Parametric test (student) and randomisation test
 
     % P-value calculation
-    % (c.1) 
-    % Parametric method
+    % (c.1) Parametric method
 
-    % length of the vectors without the Nan values
+    % Length of the vectors without the Nan values
     n = length(xAndYNotNan(:, 1));
-    % formula for the student statistic calculated from the 
+    % Formula for the student statistic calculated from the 
     % correlation coefficient r
     tStatCorrCoef = corrXY*sqrt((n-2)/(1-corrXY^2));
     dof = n - 2;
@@ -54,8 +52,7 @@ function [outCIParam, outCIBoot, outPVal, outLength] = Group10Exe4Fun1(x, y)
     pValTTest = min(tcdf(tStatCorrCoef, dof), 1-tcdf(tStatCorrCoef, dof));
 
 
-    % (c.2) 
-    % Randomisation method
+    % (c.2) Randomisation method
     corrPerm = nan(B, 1);
 
 
