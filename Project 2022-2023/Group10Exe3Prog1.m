@@ -133,3 +133,7 @@ else
         'on which the feature with the maximum difference of means ',...
         'in the two periods is.\n']);
 end
+
+%% Remarks
+% The tests for the equality of means in the two periods agree on 4 out 
+% of the 9 features 
