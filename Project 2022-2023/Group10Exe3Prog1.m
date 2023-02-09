@@ -65,20 +65,38 @@ fprintf(['Tests for the null hypothesis that the mean values \n',...
 % data names without the year (first column)
 featureDataNames = dataNames(2:end);
 
+% String array containing the acceptance or rejection of the null
+% hypothesis. The first column regards the parametric and the second the 
+% bootstrap test.
+rejectionStrMat = strings(numOfFeatures, 2);
+
 for i=1:numOfFeatures
     namePeriphrastic = string(values(M, {featureDataNames(i)}));
     fprintf('For feature %s (%s):\n', featureDataNames(i), namePeriphrastic);
 %     If the returned p values are equal to 10 it means that our 
 %     feature data vector was completely empty before or after the year 
 %     break
-    if isnan(p1(i))
+    if isnan(p1(i)) || isnan(p2(i))
         fprintf(['Data does not exist before or after the ',...
             'discontinuity point. Tests cannot be done.\n']);
         fprintf('-----------------------------------\n\n');
         
     else
-        fprintf('Parametric: p(%i) = %d\n', i, p1(i));
-        fprintf('Randomisation method: p(%i) = %d\n', i, p2(i));
+        if p1(i) < 0.05 
+            rejectionStrMat(i, 1) = 'Rejection';
+        elseif p1(i) >= 0.05 
+            rejectionStrMat(i, 1) = 'Acceptance';
+        end
+        if p2(i) < 0.05 
+            rejectionStrMat(i, 2) = 'Rejection';
+        elseif p2(i) >= 0.05 
+            rejectionStrMat(i, 2) = 'Acceptance';
+        end
+        
+        fprintf('Parametric: p(%i) = %d  (%s)\n', i, p1(i), ...
+            rejectionStrMat(i, 1));
+        fprintf('Randomisation method: p(%i) = %d  (%s)\n', i, p2(i), ...
+            rejectionStrMat(i, 2));
         fprintf('-----------------------------------\n\n');
     end 
 end
