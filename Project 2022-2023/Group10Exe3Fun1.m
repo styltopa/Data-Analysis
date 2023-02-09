@@ -5,12 +5,6 @@
 % Project for academic year 2022-2023
 % Function for Exercise 3
 
-% AEM: 9613
-% Stamatios Charteros
-% AEM:9516
-% Project for academic year 2022-2023
-% Function 1 for exercise 3
-
 function [p1, p2, discIndex] = Group10Exe3Fun1(years, feature)
     %% (a) Detect the point of discontinuity
 

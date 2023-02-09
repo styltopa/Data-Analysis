@@ -10,6 +10,7 @@
 close all;
 clear;
 clc;
+
 data = table2array(readtable('Heathrow.xlsx'));
 dataNamesStruct = importdata('Heathrow.xlsx');
 dataNames = string(dataNamesStruct.textdata.Sheet1);
@@ -38,6 +39,7 @@ adjR2V=nan(length(featureIndexesMat),1);
 pVal=nan(length(featureIndexesMat),1);
 
 for i=1:length(featureIndexesMat)
+    % Message until all adjR2 are computed
     fprintf("Loading...%i/9\n",i);
     [adjR2 , pvalue] = Group10Exe8Fun1(data(:,featureIndexesMat(i)),fogData);
     adjR2V(i)=adjR2;
@@ -67,11 +69,13 @@ for i = 1:size(pVal,1)
     end
     fprintf('-----------------------\n');
 end
+
 %% Remarks
 % The fog data seems to be explained in the best way by the feature
-% RA (Number of days with rain) with adjR2: 0.336620. 
+% RA (Number of days with rain) with adjR2: 0.336620 (which is small for a 
+% prediction model). 
 % Other features that try to explain the data are T (Mean annual 
 % temperature), TM (Mean annual maximum temperature), Tm (Mean annual 
 % minimum temperature), V (Mean annual wind velocity) but with adjR2 lower
-% than 0.2 This means that they cannot predict the fog data well enough.
+% than 0.2. This means that they cannot predict the fog data with accuracy.
   
