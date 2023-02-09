@@ -41,8 +41,8 @@ for i = 1:length(featureIndexesMat)
     
     featureData = data(:, featureIndexesMat(i));
     [adjR2Max , modelIndex] = Group10Exe7Fun1(featureData, fogData,...
-        dataNames(featureIndexesMat(i)), ...
-        dataNamesPeriphrastic(featureIndexesMat(i)), dataNames(yIndex));
+        dataNames(featureIndexesMat(i)), dataNames(yIndex), ...
+        dataNamesPeriphrastic(featureIndexesMat(i)));
     fprintf(['Given the feature %s (%s)\n',...
         'is the %s\n',...
         'with adjR2 = %.4f\n\n'], ...
@@ -55,7 +55,9 @@ end
  
 %% Remarks
 % The features that seem to explain the FG (Number of days with fog) 
-% in the best way are RA (Number of days with rain) with adjR2 = 0.3490  
-% and then T (Mean annual temperature) with adjR2 = 0.2133
+% in the best way are RA (Number of days with rain) with the 2nd degree 
+% polynomial model and with adjR2 = 0.3490  
+% and then T (Mean annual temperature) with the intrinsically linear 
+% logarithmic model with adjR2 = 0.2133
 % However, these adjR2 values are quite small making the respective model's
 % ability to predict the fog data not reliable enough.

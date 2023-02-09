@@ -5,17 +5,25 @@
 % Project for academic year 2022-2023
 % Function for exercise 7
 
+%% Arguments 
+% - x, y: feature vectors
+% - xName, yName: names of the features in short (e.g. FG)
+% - xNameP: periphrastic name of the independent feature (e.g. Number of 
+% days with fog)
 
-function [adjR2Max , Index] = Group10Exe7Fun1(x, y, xName, xNameP, yName)
+function [adjR2Max , maxAdjR2ModelIndex] = Group10Exe7Fun1(x, y, xName, yName, xNameP)
     
-    % Remove NaN values
+    %% (a) Remove NaN values
     xAndY = [x, y];  
     xAndYNotNan = rmmissing(xAndY);
     x= xAndYNotNan(:,1);
     y= xAndYNotNan(:,2);
 
        
-    %% 1st degree polynomial model  
+    %% (b) Fit models to the data, (c) plot the scatter diagram and the 
+    %% model fitting the data
+    
+    %% (b.1) 1st degree polynomial model  
     
     yModelStruct1 = fitlm(x, y, 'RobustOpts', 'ols');
     yModel1 = yModelStruct1.Fitted;
@@ -47,7 +55,7 @@ function [adjR2Max , Index] = Group10Exe7Fun1(x, y, xName, xNameP, yName)
     hold off;
 
 
-    %% 2nd degree polynomial model
+    %% (b.2) 2nd degree polynomial model
     
     X  =[x, x.^2];
     yModelStruct2 = fitlm(X, y, 'RobustOpts', 'ols');
@@ -75,7 +83,7 @@ function [adjR2Max , Index] = Group10Exe7Fun1(x, y, xName, xNameP, yName)
 	hold off;
 
 
-    %% 3rd degree polynomial model 
+    %% (b.3) 3rd degree polynomial model 
     
     X  =[x, x.^2, x.^3];
 
@@ -104,7 +112,7 @@ function [adjR2Max , Index] = Group10Exe7Fun1(x, y, xName, xNameP, yName)
     hold off;
 
 
-    %% Intrinsically linear law of power model
+    %% (b.4) Intrinsically linear law of power model
 
     xNonZeros = x;
     yNonZeros = y;
@@ -161,7 +169,8 @@ function [adjR2Max , Index] = Group10Exe7Fun1(x, y, xName, xNameP, yName)
     annotationFontSize);
     title('Intrinsically linear power law model');
     hold off;
-    %% Reversed Intrinsically linear model
+    
+    %% (b.5) Inverse Intrinsically linear model
     
     xNonZeros = x;
     yNonZeros = y;
@@ -184,7 +193,7 @@ function [adjR2Max , Index] = Group10Exe7Fun1(x, y, xName, xNameP, yName)
     yModelStructTransformed = fitlm(xTransformed, yNonZeros, 'RobustOpts', 'ols');
 
 
-    % revert beck to the linear model by changing the coefficients
+    % Revert beck to the linear model by changing the coefficients
     b = yModelStructTransformed.Coefficients.Estimate; 
     [xSorted, I] =sort(xNonZeros);
     for i =1:length(xNonZeros)
@@ -216,7 +225,7 @@ function [adjR2Max , Index] = Group10Exe7Fun1(x, y, xName, xNameP, yName)
 
     hold off;
 
-    %% Exponential intrinsically linear model
+    %% (b.6) Exponential intrinsically linear model
 
     xNonZeros = x;
     yNonZeros = y;
@@ -241,7 +250,7 @@ function [adjR2Max , Index] = Group10Exe7Fun1(x, y, xName, xNameP, yName)
         yModel(i) = b(1)*exp(b(2)*x(i));
     end
     for i=1:length(I)
-        Y(i) =yModel(I(i));
+        Y(i) = yModel(I(i));
     end
 
     adjR2_6=1-((length(y)-1)/(length(y)-2))*((sum((y-yModel).^2)/sum((y-mean(y)).^2)));
@@ -269,8 +278,10 @@ function [adjR2Max , Index] = Group10Exe7Fun1(x, y, xName, xNameP, yName)
     
     hold off;
 
-
-    [adjR2Max,Index] = max([adjR2_1,adjR2_2,adjR2_3,adjR2_4,adjR2_5,adjR2_6]);
+    %% (d) Select the best model (the one with the highest R^2)
+    %% (e) Return the respective adjR2
+    [adjR2Max,maxAdjR2ModelIndex] = ...
+        max([adjR2_1, adjR2_2, adjR2_3, adjR2_4, adjR2_5, adjR2_6]);
 end
     
     
