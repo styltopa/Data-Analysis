@@ -5,6 +5,9 @@
 % Project for academic year 2022-2023
 % Function for exercise 4
 
+%% Arguments 
+% - x, y: feature vector
+
 function [outCIParam, outCIBoot, outPVal, outLength] = Group10Exe4Fun1(x, y)
     %% (a) Find the Nan pair values and remove them
     % Merging the two columns 

@@ -5,6 +5,9 @@
 % Project for academic year 2022-2023
 % Function for exercise 8
 
+%% Arguments 
+% - x, y: feature vectors
+
 function [adjR2Poly, pVal] = Group10Exe8Fun1(x,y)
     
     %% (a) Remove Nan values

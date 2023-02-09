@@ -5,6 +5,9 @@
 % Project for academic year 2022-2023
 % Function for exercise 2
 
+%% Argument
+% - x: feature vector
+
 function [CI ,CIbootstrap] = Group10Exe2Fun1(x)
     %   Remove Nan values
     idx  = isnan(x);

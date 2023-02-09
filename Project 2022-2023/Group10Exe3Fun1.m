@@ -5,6 +5,10 @@
 % Project for academic year 2022-2023
 % Function for Exercise 3
 
+%% Arguments 
+% - years: the years vector 
+% - feature: the corresponding feature vector
+
 function [p1, p2, discIndex] = Group10Exe3Fun1(years, feature)
     %% (a) Detect the point of discontinuity
 
