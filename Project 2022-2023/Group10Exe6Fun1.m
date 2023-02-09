@@ -6,7 +6,7 @@
 % Function for exercise 6
 
 
-function adjR2 = Group10Exe6Fun1(x, y, xName, yName, xNameP, ax)
+function R2 = Group10Exe6Fun1(x, y, xName, yName, xNameP, ax)
     %% (a) Remove Nan pair values
     
     % namesPeriphrastically = [Mean annual tempearature
@@ -15,16 +15,16 @@ function adjR2 = Group10Exe6Fun1(x, y, xName, yName, xNameP, ax)
     [x, y] = deal(xAndYNotNan(:, 1), xAndYNotNan(:, 2));
     
     
-    %% (b) Fit linear model and calculate adjR^2
+    %% (b) Fit linear model and calculate R^2
     % fit linear model on the first variable using the ordinary least squares
     % method.
     yModelStruct = fitlm(x, y, 'RobustOpts', 'ols');
     yModel = yModelStruct.Fitted;
 
-    %% (d) Adjusted R^2 is returned
-    adjR2 = yModelStruct.Rsquared.Adjusted;
-
-    %% (c) Scatter diagram, fitted line on the independent variable and adjR^2 
+    %% (d) R^2 is returned
+    R2 = yModelStruct.Rsquared.Ordinary;
+    
+    %% (c) Scatter diagram, fitted line on the independent variable and R^2 
     %% shown on plot
 
     dotSize = 15;
@@ -44,7 +44,7 @@ function adjR2 = Group10Exe6Fun1(x, y, xName, yName, xNameP, ax)
         posArr(2) + posArr(4) - yOffset, 0.1 ,0.1); 
     annotPosAndDims = [posX, posY, width, height];
     annotation('textbox', annotPosAndDims, 'String', ...
-        {"$AdjR^2$: "+ adjR2}, ...
+        {"$R^2$: "+ R2}, ...
         'interpreter', 'latex', ...
         'FontSize', ...
         annotationFontSize);

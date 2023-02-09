@@ -28,12 +28,12 @@ M = containers.Map(dataNames, dataNamesPeriphrastic);
 % cell array with 9 dependent features and 2 columns
 % one for the feature name, one for the independent variable explaining in
 % the best way the independent one
-% and one for the corresponding adjR2 of the linear model
-dependentFeatureAndAdjR2Arr = cell(9, 5);
+% and one for the corresponding R2 of the linear model
+dependentFeatureAndR2Arr = cell(9, 5);
     
 % take out the years index (1), the tornado index (11) 
 dataIndices = [2, 3, 4, 5, 6, 7, 8, 9, 10, 12];
-adjR2V = -100*ones(length(dataIndices), 1);
+R2V = -100*ones(length(dataIndices), 1);
 % dependent variable index
 for yIndex = 1:length(dataIndices)
     % the column number of the dependent variable in the original data
@@ -44,7 +44,7 @@ for yIndex = 1:length(dataIndices)
     sgtitle("Scatter diagrams for the " + ...
         dataNamesPeriphrastic(yCol)+ " (" + dataNames(yCol) + ")");
     subplotCounter = 0;
-    adjR2V = -100*ones(length(dataIndices), 1);
+    R2V = -100*ones(length(dataIndices), 1);
     % independent variable index
     for xIndex = 1:size(dataIndices, 2)
         % the column number of the independent variable in the original data
@@ -59,43 +59,43 @@ for yIndex = 1:length(dataIndices)
         xNameP = values(M, {xName});
         subplotCounter = subplotCounter + 1;
         ax = nexttile;
-        adjR2V(xIndex) = Group10Exe6Fun1(x, y, xName, yName, xNameP, ax); 
+        R2V(xIndex) = Group10Exe6Fun1(x, y, xName, yName, xNameP, ax); 
     end
  
     % For each feature (dependent variable) 
-    % we find the first and second highest adjR2 among all other features 
+    % we find the first and second highest R2 among all other features 
     % (independent variables) 
-    [adjR2VSorted, adjR2SortedInd] = sort(adjR2V);
-    % maximum adjR2 among independent features
-    maxAdjR2 = adjR2VSorted(end);
-    % second maximum adjR2 among independent features
-    secondMaxAdjR2 = adjR2VSorted(end-1);
+    [R2VSorted, R2SortedInd] = sort(R2V);
+    % maximum R2 among independent features
+    maxR2 = R2VSorted(end);
+    % second maximum R2 among independent features
+    secondMaxR2 = R2VSorted(end-1);
     
     % Indices of independent feature giving linear model with 
-    % maximum and second maximum adjR2 
-    maxAdjR2Ind = adjR2SortedInd(end);
-    secondMaxAdjR2Ind = adjR2SortedInd(end-1);
+    % maximum and second maximum R2 
+    maxR2Ind = R2SortedInd(end);
+    secondMaxR2Ind = R2SortedInd(end-1);
     
-    dependentFeatureAndAdjR2Arr(yIndex, 1) = cellstr(yName);
-    dependentFeatureAndAdjR2Arr(yIndex, 2) = ...
-        cellstr(dataNames(dataIndices(maxAdjR2Ind)));
-    dependentFeatureAndAdjR2Arr(yIndex, 3) = num2cell(maxAdjR2);
+    dependentFeatureAndR2Arr(yIndex, 1) = cellstr(yName);
+    dependentFeatureAndR2Arr(yIndex, 2) = ...
+        cellstr(dataNames(dataIndices(maxR2Ind)));
+    dependentFeatureAndR2Arr(yIndex, 3) = num2cell(maxR2);
 
-    dependentFeatureAndAdjR2Arr(yIndex, 4) = ...
-        cellstr(dataNames(dataIndices(secondMaxAdjR2Ind)));
-    dependentFeatureAndAdjR2Arr(yIndex, 5) = ...
-        num2cell(secondMaxAdjR2);
+    dependentFeatureAndR2Arr(yIndex, 4) = ...
+        cellstr(dataNames(dataIndices(secondMaxR2Ind)));
+    dependentFeatureAndR2Arr(yIndex, 5) = ...
+        num2cell(secondMaxR2);
     
 end
 fprintf(['The table below contains all features as dependent \n',...
     'variables in the first column.\n',...
     'The other columns contain the two features best explaining\n',...
-    'the dependent one and their respective linear models'' adjR2.\n\n']);
+    'the dependent one and their respective linear models'' R2.\n\n']);
 
-disp(' Dependent    Most ''explaining''    AdjR2          Second most          AdjR2');
-disp(' Variable          feature                    ''explaining'' feature');
+disp(' Dependent    Most ''explaining''    R2          Second most            R2');
+disp(' Variable          feature                 ''explaining'' feature');
 
-disp(dependentFeatureAndAdjR2Arr);
+disp(dependentFeatureAndR2Arr);
 
 
 
@@ -103,14 +103,14 @@ disp(dependentFeatureAndAdjR2Arr);
 %% Pairs of variables explaining one another well
 % 1. The mean annual temperature T is easily explained by the maximum 
 % annual temperature TM and vice versa which is to be expected. The 
-% relative adjR2 is high (~0.9539)
+% relative R2 is high (~0.9548)
 % 2. The number of windy days TS and the number of days with hail (GR) also
-% seem to be explaining one another but with a much lower adjR2 (~0.4107)
+% seem to be explaining one another but with a much lower R2 (~0.4218)
 % which is rather insignificant.
 
 %% All other variables
 % All other variables are not explained well by a linear model of just 
-% one other variable as the adjR2 falls below what would be a significant 
+% one other variable as the R2 falls below what would be a significant 
 % threshold (0.8 for example).
 
 
