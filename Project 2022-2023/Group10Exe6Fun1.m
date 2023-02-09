@@ -5,6 +5,12 @@
 % Project for academic year 2022-2023
 % Function for exercise 6
 
+%% Arguments 
+% - x, y: feature vectors
+% - xName, yName: names of the features in short (e.g. FG)
+% - xNameP: periphrastic name of the independent feature (e.g. Number of 
+% days with fog)
+% - ax: ax object to plot on
 
 function R2 = Group10Exe6Fun1(x, y, xName, yName, xNameP, ax)
     %% (a) Remove Nan pair values
@@ -16,8 +22,7 @@ function R2 = Group10Exe6Fun1(x, y, xName, yName, xNameP, ax)
     
     
     %% (b) Fit linear model and calculate R^2
-    % fit linear model on the first variable using the ordinary least squares
-    % method.
+    % The ordinary least squares method is used.
     yModelStruct = fitlm(x, y, 'RobustOpts', 'ols');
     yModel = yModelStruct.Fitted;
 
@@ -29,13 +34,13 @@ function R2 = Group10Exe6Fun1(x, y, xName, yName, xNameP, ax)
 
     dotSize = 15;
     scatter(x, y, dotSize, 'filled');
-    % the title regards the independent variable (horizontal axis)
+    % The title regards the independent variable (horizontal axis)
     title({xNameP + " (" + xName + ")"});    
     xlabel(xName);
     ylabel(yName);
     hold on;
-    plot(x, yModel, 'Color', 'r', 'LineWidth', 1.5);
-      
+    
+    plot(x, yModel, 'Color', 'r', 'LineWidth', 1.5);  
     annotationFontSize = 12;
     posArr = ax.InnerPosition;
     xOffset = 0.1;

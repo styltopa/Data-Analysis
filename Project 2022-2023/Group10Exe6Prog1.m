@@ -25,7 +25,7 @@ dataNamesPeriphrastic = {'Year', 'Mean annual temperature', ...
 % Map of short names of features to their periphrastic names
 M = containers.Map(dataNames, dataNamesPeriphrastic);
 
-% cell array with 9 dependent features and 2 columns
+% Cell array with 9 dependent features and 2 columns
 % one for the feature name, one for the independent variable explaining in
 % the best way the independent one
 % and one for the corresponding R2 of the linear model
@@ -101,12 +101,13 @@ disp(dependentFeatureAndR2Arr);
 
 %% Remarks
 %% Pairs of variables explaining one another well
-% 1. The mean annual temperature T is easily explained by the maximum 
-% annual temperature TM and vice versa which is to be expected. The 
-% relative R2 is high (~0.9548)
-% 2. The number of windy days TS and the number of days with hail (GR) also
-% seem to be explaining one another but with a much lower R2 (~0.4218)
-% which is rather insignificant.
+% 1. The mean annual temperature (T) is easily explained by the maximum 
+% annual temperature (TM) as its linear function and vice versa 
+% which is to be expected. The relative R2 is high (~0.9548)
+% 2. The number of windy days (TS) and the number of days with hail (GR) 
+% also seem to be explaining one another as a linear model 
+% but with a much lower R2 (~0.4218) making for a rather unreliable model 
+% to predict with.
 
 %% All other variables
 % All other variables are not explained well by a linear model of just 
