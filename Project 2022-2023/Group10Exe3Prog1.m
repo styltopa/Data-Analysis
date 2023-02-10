@@ -3,7 +3,7 @@
 % Stamatios Charteros
 % AEM: 9516
 % Project for academic year 2022-2023
-% Function 1 for exercise 3
+% Program for exercise 3
 
 % Estimated time to run: ~1 second.
 

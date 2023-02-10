@@ -31,10 +31,10 @@ M = containers.Map(dataNames, dataNamesPeriphrastic);
 % and one for the corresponding R2 of the linear model
 dependentFeatureAndR2Arr = cell(9, 5);
     
-% take out the years index (1), the tornado index (11) 
+% Take out the years index (1), the tornado index (11) 
 dataIndices = [2, 3, 4, 5, 6, 7, 8, 9, 10, 12];
 R2V = -100*ones(length(dataIndices), 1);
-% dependent variable index
+% Dependent variable index
 for yIndex = 1:length(dataIndices)
     % the column number of the dependent variable in the original data
     yCol = dataIndices(yIndex);
@@ -45,11 +45,11 @@ for yIndex = 1:length(dataIndices)
         dataNamesPeriphrastic(yCol)+ " (" + dataNames(yCol) + ")");
     subplotCounter = 0;
     R2V = -100*ones(length(dataIndices), 1);
-    % independent variable index
+    % Independent variable index
     for xIndex = 1:size(dataIndices, 2)
-        % the column number of the independent variable in the original data
+        % The column number of the independent variable in the original data
         xCol = dataIndices(xIndex);
-        % and the index of the variable itself (xId)
+        % The index of the variable itself (xId)
         if xCol == yCol
             continue;
         end
@@ -66,9 +66,9 @@ for yIndex = 1:length(dataIndices)
     % we find the first and second highest R2 among all other features 
     % (independent variables) 
     [R2VSorted, R2SortedInd] = sort(R2V);
-    % maximum R2 among independent features
+    % Maximum R2 among independent features
     maxR2 = R2VSorted(end);
-    % second maximum R2 among independent features
+    % Second maximum R2 among independent features
     secondMaxR2 = R2VSorted(end-1);
     
     % Indices of independent feature giving linear model with 

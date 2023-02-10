@@ -21,11 +21,6 @@ dataNamesPeriphrastic = {'Year', 'Mean annual temperature', ...
         'Number of days with wind', 'Number of days with fog', ...
         'Number of days with tornado', 'Number of days with hail'};
 
-% [xId, yId] = deal(3, 4);
-% x = data(:, xId);
-% % the fifth column, can be replaced with y
-% y = data(:, yId);
-
 % Without the year column
 numOfCols = size(data, 2);
 comboCounter = 0;
