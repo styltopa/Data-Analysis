@@ -7,8 +7,8 @@ clc;
 close all;
 
 % Data import
-rainData = readtable('rainThes59_97.dat');
-tempData = readtable('tempThes59_97.dat');
+rainData = readtable('../../data/rainThes59_97.dat');
+tempData = readtable('../../data/tempThes59_97.dat');
 
 % Table data -> array data
 rainData = table2array(rainData);
@@ -24,13 +24,14 @@ corrCoefPerMonthOriginal = NaN(numOfCols, 1);
 for monthKey = 1:numOfCols
     corrCoefPerMonthMat = corrcoef(rainData(:, monthKey), tempData(:, monthKey));
     corrCoefPerMonthOriginal(monthKey) = corrCoefPerMonthMat(1, 2);
-% % Uncomment this section to plot the scatter diagrams of the original
-% % sample rain - temperature data
-%     figure();
-%     scatter(rainData(:, month), tempData(:, month));
-%     xlabel('Rain');
-%     ylabel('Temperature');
-%     hold off
+% Uncomment this section to plot the scatter diagrams of the original
+% sample rain - temperature data
+    figure();
+    % scatter(rainData(:, month), tempData(:, month));
+    scatter(rainData(:, monthKey), tempData(:, monthKey));
+    xlabel('Rain');
+    ylabel('Temperature');
+    hold off
 end
 
 % Significance level for the tests
